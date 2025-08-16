@@ -5,20 +5,29 @@ import tensorflow as tf
 from PIL import Image
 import requests
 from io import BytesIO
+from fastapi.middleware.cors import CORSMiddleware  # ✅ เพิ่มบรรทัดนี้
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # หรือระบุ ["http://localhost:5173"] ถ้าจะล็อคเฉพาะ React
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class ImageRequest(BaseModel):
     url: str
 
 # 🔹 โหลด TFLite model
 interpreter = tf.lite.Interpreter(
-    model_path="C:/Users/User/Documents/Capstone/ai-inference/rice_disease_model.tflite"
+    model_path="C:/Users/HP/Documents/GitHub/Capstone/ai-inference/rice_disease_model.tflite"
 )
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt
-with open("C:/Users/User/Documents/Capstone/ai-inference/labels.txt", "r", encoding="utf-8") as f:
+with open("C:/Users/HP/Documents/GitHub/Capstone/ai-inference/labels.txt", "r", encoding="utf-8-sig") as f:
     label_map = [line.strip() for line in f.readlines()]
 
 # 🔹 ดึง input/output tensor
@@ -46,7 +55,7 @@ def predict_from_url(image_url: str):
     }
 
 # 🔹 Endpoint สำหรับพยากรณ์
-@app.post("/predict")
+@app.post("/uploads/analyze")
 def predict_image(req: ImageRequest):
     try:
         print(f"📥 Received image URL: {req.url}")
