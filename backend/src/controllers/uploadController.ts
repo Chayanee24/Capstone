@@ -1,9 +1,8 @@
-//uploadController.ts
 import { Request, Response, RequestHandler } from 'express'
 import axios from 'axios'
 import supabase from '../services/supabase'
 
-export const uploadImageAndAnalyze: RequestHandler = async (req: Request, res: Response) => {
+export const uploadImageAndAnalyze: RequestHandler = async (req: Request, res: Response, next) => {
   try {
     const file = req.file
 
@@ -43,25 +42,35 @@ export const uploadImageAndAnalyze: RequestHandler = async (req: Request, res: R
     })
 
     // ✅ บันทึกลงฐานข้อมูล RiceImages
-    const { error: dbError } = await supabase.from('RiceImages').insert([
-      {
-        image_path: imageUrl,
-        location: 'Thailand',
-        user_id: 1, // TODO: ควรเปลี่ยนเป็น user จริงจาก JWT / Auth
-        //created_at: new Date().toISOString(),
-      },
-    ])
+    const { data: riceImageData, error: riceImageError } = await supabase
+      .from('RiceImages')
+      .insert([
+        {
+          image_path: imageUrl,
+          location: 'Thailand',
+          user_id: 1,
+        },
+      ])
+      .select('id');
 
-    if (dbError) {
-      console.error('❌ Database insert error:', dbError.message)
+    if (riceImageError) {
+      console.error(riceImageError);
+      throw new Error(riceImageError.message);
     }
 
-    // ✅ ตอบกลับ
-    res.json({
-      message: 'Upload and analysis successful',
-      imageUrl,
-      prediction: aiResponse.data.prediction,
-    })
+    const insertedId = riceImageData?.[0]?.id;
+
+    res.locals.analysisData = {
+      imageID: insertedId,
+      prediction: aiResponse.data.label,
+      imageUrl, // เก็บเผื่อใช้ใน response
+    };
+
+    //console.log('🔥 analysisData set:', res.locals.analysisData);
+
+    //ส่งต่อไปให้ saveAnalysisResult
+    next();
+
   } catch (err: any) {
     console.error('❌ Unexpected error:', err.message || err)
     res.status(500).json({ error: 'Error processing request', detail: err.message })
