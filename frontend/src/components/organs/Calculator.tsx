@@ -1,6 +1,6 @@
 import { Image } from "../atoms/Image"
 import { Text } from "../atoms/Text"
-import CalImg from "../../assets/gym/9.jpeg"
+//import CalImg from "../../assets/gym/9.jpeg"
 import Form from "../molecules/Form"
 import { Fade } from "react-awesome-reveal"
 

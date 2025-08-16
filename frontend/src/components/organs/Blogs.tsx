@@ -1,9 +1,9 @@
 import { Text } from "../atoms/Text"
 import { Card } from "../molecules/Card"
 import { VarietyTexts } from "../particles/Data"
-import Image1 from "../../assets/gym/6.jpeg";
-import Image2 from "../../assets/gym/11.jpeg"
-import Image3 from "../../assets/gym/12.jpeg"
+//import Image1 from "../../assets/gym/6.jpeg";
+//import Image2 from "../../assets/gym/11.jpeg"
+//import Image3 from "../../assets/gym/12.jpeg"
 import { useCallback } from "react";
 import { Image } from "../atoms/Image";
 import { Link } from "react-router-dom";

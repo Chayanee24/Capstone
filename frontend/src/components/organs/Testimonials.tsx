@@ -1,8 +1,8 @@
 import { Text } from "../atoms/Text"
 import { TestimonialTexts } from "../particles/Data";
-import client1 from "../../assets/gym/7.jpeg"
-import client2 from "../../assets/gym/8.jpeg"
-import client3 from "../../assets/gym/10.jpeg"
+//import client1 from "../../assets/gym/7.jpeg"
+//import client2 from "../../assets/gym/8.jpeg"
+//import client3 from "../../assets/gym/10.jpeg"
 import { useCallback } from "react";
 import Slider from "react-slick";
 import { Card } from "../molecules/Card";

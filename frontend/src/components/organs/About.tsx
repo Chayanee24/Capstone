@@ -1,8 +1,8 @@
 import { Fade } from "react-awesome-reveal";
-import Image1 from "../../assets/gym/2.jpeg";
-import Image2 from "../../assets/gym/3.jpeg";
-import Image3 from "../../assets/gym/4.jpeg";
-import Image4 from "../../assets/gym/5.jpeg";
+//import Image1 from "../../assets/gym/2.jpeg";
+//import Image2 from "../../assets/gym/3.jpeg";
+//import Image3 from "../../assets/gym/4.jpeg";
+//import Image4 from "../../assets/gym/5.jpeg";
 import { Image } from "../atoms/Image";
 import { Text } from "../atoms/Text";
 import { AboutTexts } from "../particles/Data";
