@@ -2,16 +2,16 @@ import { useState } from "react"
 import { Slide, Zoom } from "react-awesome-reveal"
 
 interface Disease {
-  disease_name: string;
-  symptom: string;
-  solution_text: string;
+  disease_name: string
+  symptom: string
+  DeficiencySolutions: { solution_text: string }[]
 }
 
 interface DiagnosisResult {
   diseaseName: string
   prediction: string
   cause?: string
-  treatment?: string
+  treatment?: string[]
 }
 
 const Diagnosis = () => {
@@ -43,18 +43,25 @@ const Diagnosis = () => {
       const formData = new FormData()
       formData.append("image", selectedImage)
 
+      // เรียก API วิเคราะห์ภาพ
       const analyzeResponse = await fetch("http://localhost:3000/uploads/analyze", {
         method: "POST",
         body: formData,
       })
       if (!analyzeResponse.ok) throw new Error("ไม่สามารถวิเคราะห์ได้")
-
       const analyzeData: { prediction: string } = await analyzeResponse.json()
 
+      // โหลดข้อมูลโรคทั้งหมด
       const allResponse = await fetch("http://localhost:3000/disease/all")
       if (!allResponse.ok) throw new Error("ไม่สามารถโหลดข้อมูลโรคได้")
+      const allDataRaw = await allResponse.json()
 
-      const allData: Disease[] = await allResponse.json()
+      const allData: Disease[] = Array.isArray(allDataRaw)
+        ? allDataRaw
+        : Array.isArray(allDataRaw.data)
+        ? allDataRaw.data
+        : []
+
       const disease = allData.find((d) => d.disease_name === analyzeData.prediction)
       if (!disease) throw new Error("ไม่พบข้อมูลโรค")
 
@@ -62,7 +69,7 @@ const Diagnosis = () => {
         diseaseName: disease.disease_name,
         prediction: analyzeData.prediction,
         cause: disease.symptom,
-        treatment: disease.solution_text,
+        treatment: disease.DeficiencySolutions?.map((s) => s.solution_text) ?? [],
       })
     } catch (err: any) {
       alert(err.message || "เกิดข้อผิดพลาด")
@@ -70,6 +77,17 @@ const Diagnosis = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  // ฟังก์ชันช่วยแยกบรรทัดและลบ <u>
+  const formatSymptom = (text?: string) => {
+    if (!text) return ["- ไม่มีข้อมูล"]
+    return text
+      .replace(/<u>/g, "")
+      .replace(/<\/u>/g, "")
+      .split(/(?:\r?\n|;|\.|\s{2,})/) // แยกบรรทัดตาม newline หรือจุดหรือเว้นวรรคมากกว่า 1
+      .map((line) => line.trim())
+      .filter(Boolean)
   }
 
   return (
@@ -132,17 +150,45 @@ const Diagnosis = () => {
       </div>
 
       {result && (
-        <div className="w-full max-w-3xl flex flex-col gap-4">
-          <h2 className="text-2xl font-bold text-green-400 mb-4">ผลลัพธ์วินิจฉัย</h2>
-          <Slide direction="up">
-            <div className="bg-zinc-800 p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-              <p><strong>Prediction:</strong> {result.prediction}</p>
-              <p><strong>โรค:</strong> {result.diseaseName}</p>
-              <p><strong>สาเหตุ:</strong> {result.cause}</p>
-              <p><strong>การดูแลรักษา:</strong> {result.treatment}</p>
+        
+        <Slide direction="up">
+          <p className="text-green-200 font-extrabold text-3xl md:text-4xl mb-5 underline ">
+                ผลการวินิจฉัย
+            </p>
+          <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md backdrop-blur-md border border-green-700 ">
+
+            <h2 className="text-2xl font-bold text-green-300 mb-2 drop-shadow-md">
+              {result.diseaseName}
+            </h2>
+
+            {/* สาเหตุ */}
+            <div className="mb-4 text-green-100/80">
+              <strong className="block mb-1 font-bold text-yellow-200">สาเหตุ:</strong>
+              <ul className="list-disc list-inside space-y-1">
+                {result.cause
+                  ? result.cause
+                    .split(/(?=<u>)/) // แยกทุก <u> เป็นบรรทัด
+                    .map((line, i) =>
+                      line.trim() ? (
+                        <li key={i}>{line.replace(/<[^>]+>/g, "").trim()}</li>
+                      ) : null
+                    )
+                  : <li>- ไม่มีข้อมูล</li>}
+              </ul>
             </div>
-          </Slide>
-        </div>
+
+            {/* การดูแลรักษา */}
+            <div className="text-green-100/80">
+              <strong className="block mb-1 font-bold text-yellow-200">การดูแลรักษา:</strong>
+              <ul className="list-disc list-inside space-y-1">
+                {result.treatment?.length
+                  ? result.treatment.map((text, i) => <li key={i}>{text}</li>)
+                : <li>- ไม่มีข้อมูล</li>}
+              </ul>
+            </div>
+          
+          </div>
+        </Slide>
       )}
     </div>
   )
