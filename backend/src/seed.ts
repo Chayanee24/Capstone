@@ -96,66 +96,69 @@ export async function seedUsers() {
       email: 'wichitchai63@gmail.com',
       password: '123456',
       display_name: 'User1',
-      phone: '0900000000',
+      phone: '0800000000',
       role_id: 1
     },
     {
       email: 'b6512194@g.sut.ac.th',
-      password: '654321',
+      password: '123456789',
       display_name: 'User2',
-      phone: '0800000000',
+      phone: '0900000000',
       role_id: 2
     }
   ];
 
   for (const u of usersData) {
-    // 1. ใช้ Auth Admin API ตรวจสอบ user
+    // 1. list users จาก auth
     const { data: userList, error: listError } = await supabase.auth.admin.listUsers({
       page: 1,
       perPage: 1000
     });
 
     if (listError) {
-      console.error(`Error listing users:`, listError);
+      //console.error(`Error listing users:`, listError);
       continue;
     }
 
+    let authUserId: string | null = null;
     const existingAuth = userList.users.find(user => user.email === u.email);
 
     if (existingAuth) {
-      //console.log(`User already exists in auth.users: ${u.email}`);
-      continue; // ข้ามการสร้าง user ใหม่
-    }
+      // ใช้ uid เดิมของ auth.users
+      authUserId = existingAuth.id;
+    } else {
+      // ยังไม่มี user ใน auth → สร้างใหม่
+      const { data: signUpData, error: signUpError } = await supabase.auth.admin.createUser({
+        email: u.email,
+        password: u.password,
+        user_metadata: {
+          display_name: u.display_name,
+          phone: u.phone
+        }
+      });
 
-    // 2. สมัคร user ใหม่
-    const { data: signUpData, error: signUpError } = await supabase.auth.admin.createUser({
-      email: u.email,
-      password: u.password,
-      phone: u.phone,
-      user_metadata: {
-        display_name: u.display_name,
-        //phone: u.phone
+      if (signUpError || !signUpData.user) {
+        //console.error(`Error creating auth user for ${u.email}:`, signUpError);
+        continue;
       }
-    });
 
-    if (signUpError || !signUpData.user) {
-      console.error(`Error creating auth user for ${u.email}:`, signUpError);
-      continue;
+      authUserId = signUpData.user.id;
     }
 
-    const authUserId = signUpData.user.id;
-
-    // 3. insert ลง public.Users
-    const { error: insertError } = await supabase
+    // 2. insert หรือ update ลง public.Users
+    const { error: upsertError } = await supabase
       .from('Users')
-      .insert([{ user_id: authUserId, role_id: u.role_id }]);
+      .upsert(
+        [{ user_id: authUserId, role_id: u.role_id }],
+        { onConflict: 'user_id' } // ป้องกันซ้ำ
+      );
 
-    if (insertError) {
-      console.error(`Error inserting into public.Users for ${u.email}:`, insertError);
+    if (upsertError) {
+      //console.error(`Error upserting into public.Users for ${u.email}:`, upsertError);
       continue;
     }
 
-    //console.log(`Created new user: ${u.email}`);
+    //console.log(`Synced user: ${u.email}`);
   }
 }
 

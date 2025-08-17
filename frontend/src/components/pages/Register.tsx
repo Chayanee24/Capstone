@@ -56,12 +56,16 @@ function Register() {
       <div className="w-full max-w-md bg-black/80 p-8 rounded-2xl shadow-2xl text-white">
         
         {/* Logo */}
-        <div className="flex justify-center items-center mb-6">
-          <Leaf size={28} weight="fill" className="text-green-400 mr-2" />
-          <h1 className="text-3xl font-extrabold">
-            <span className="text-white">Khao</span>
-            <span className="bg-gradient-to-r from-green-400 to-yellow-400 bg-clip-text text-transparent ml-1">Care</span>
-          </h1>
+        <div className="w-full flex justify-center items-center py-6 px-6 lg:px-16">
+            <div className="font-extrabold flex items-center relative md:text-2xl text-lg">
+                <span className="text-green-400 absolute -top-3 md:left-5 left-3">
+                   <Leaf size={25} weight="fill" />
+                </span>
+                <span className="text-white">Khao</span>
+                <span className="bg-gradient-to-r from-green-400 to-yellow-400 bg-clip-text text-transparent">
+                   Care
+                </span>
+            </div>
         </div>
 
         {error && <p className="text-red-400 text-center mb-3">{error}</p>}

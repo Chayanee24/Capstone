@@ -3,19 +3,27 @@ import supabase from '../services/supabase'
 
 // ✅ REGISTER
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, username, role, phone } = req.body
-
+  const { email, password, username, role_id, phone } = req.body
+  //console.log(role_id)
   // ใช้ auth.signup
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    phone,
     options: {
       data: {
         display_name: username,
         phone: phone
       }
     }
-  })  
+  })
+  
+  const authUserId = data.user?.id;
+
+  //insert ลง public.Users
+  await supabase
+    .from('Users')
+    .insert([{ user_id: authUserId, role_id: role_id }]);
 
   if (error) {
     res.status(400).json({ error: error.message })
