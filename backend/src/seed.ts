@@ -131,9 +131,10 @@ export async function seedUsers() {
     const { data: signUpData, error: signUpError } = await supabase.auth.admin.createUser({
       email: u.email,
       password: u.password,
+      phone: u.phone,
       user_metadata: {
         display_name: u.display_name,
-        phone: u.phone
+        //phone: u.phone
       }
     });
 

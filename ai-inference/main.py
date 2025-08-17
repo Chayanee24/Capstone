@@ -13,12 +13,12 @@ class ImageRequest(BaseModel):
 
 # 🔹 โหลด TFLite model
 interpreter = tf.lite.Interpreter(
-    model_path="C:/Users/User/Desktop/Capstone/ai-inference/rice_disease_model.tflite"
+    model_path="C:/Users/HP/Documents/GitHub/Capstone/ai-inference/rice_disease_model.tflite"
 )
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt
-with open("C:/Users/User/Desktop/Capstone/ai-inference/labels.txt", "r", encoding="utf-8-sig") as f:
+with open("C:/Users/HP/Documents/GitHub/Capstone/ai-inference/labels.txt", "r", encoding="utf-8-sig") as f:
     label_map = [line.strip() for line in f.readlines()]
 
 # 🔹 ดึง input/output tensor

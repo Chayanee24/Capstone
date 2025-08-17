@@ -2,7 +2,7 @@ export const NavLinks = [
     
     {
         name: "หน้าแรก",
-        url: "/",
+        url: "/home",
     
     },
     {
@@ -17,7 +17,11 @@ export const NavLinks = [
         name: "วินิจฉัยโรค",
         url: "/diagnosis"
     },
-
+    {
+        name: "ออกจากระบบ",
+        url: "/"
+    },
+      
 ];
 
 export const Texts = [

@@ -1,41 +1,38 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-//importing react slick slider
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
 import { animateScroll } from "react-scroll";
-import NavBar from "./components/organs/NavBar"
+import NavBar from "./components/organs/NavBar";
 import Home from "./components/pages/Home";
-// import Footer from "./components/organs/Footer";
 import Diagnosis from "./components/pages/Diagnosis";
 import DiseasePage from "./components/pages/DiseasePage";
 import VarietyPage from "./components/pages/VarietyPage";
-import DiseaseBlog from "./components/pages/DiseaseBlog";
-
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 
 function App() {
+  const location = useLocation();
 
-  const directory = useLocation();
   useEffect(() => {
-    animateScroll.scrollToTop({
-      duration: 0,
-    });
-  }, [directory.pathname]);
+    animateScroll.scrollToTop({ duration: 0 });
+  }, [location.pathname]);
+
+  // ซ่อน NavBar ถ้าอยู่ที่ / หรือ /register
+  const hideNavBar = location.pathname === "/" || location.pathname === "/register";
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
-      <NavBar />
+      {!hideNavBar && <NavBar />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/diagnosis" element={<Diagnosis />} />
         <Route path="/diseases" element={<DiseasePage />} />
         <Route path="/varieties" element={<VarietyPage />} />
-
+        <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       {/* <Footer /> */}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
