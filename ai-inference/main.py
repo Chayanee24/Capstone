@@ -5,17 +5,8 @@ import tensorflow as tf
 from PIL import Image
 import requests
 from io import BytesIO
-from fastapi.middleware.cors import CORSMiddleware  # ✅ เพิ่มบรรทัดนี้
 
 app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # หรือระบุ ["http://localhost:5173"] ถ้าจะล็อคเฉพาะ React
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 class ImageRequest(BaseModel):
     url: str
