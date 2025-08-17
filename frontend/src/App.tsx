@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { animateScroll } from "react-scroll";
 import NavBar from "./components/organs/NavBar"
 import Home from "./components/pages/Home";
-import Footer from "./components/organs/Footer";
+// import Footer from "./components/organs/Footer";
 import Diagnosis from "./components/pages/Diagnosis";
 import DiseasePage from "./components/pages/DiseasePage";
 import VarietyPage from "./components/pages/VarietyPage";

@@ -1,5 +1,4 @@
 export const NavLinks = [
-
     
     {
         name: "หน้าแรก",
@@ -68,61 +67,6 @@ export const OfferTexts = {
 };
 
 
-export const MembershipPlans = {
-    firstText: "Pricing Tables",
-    secondText: "Membership Plans",
-    cards: [
-        {
-            amount: 8,
-            duration: "day",
-            caption: "One Day Training",
-            benefits: ["One time access to all clubs", "Group trainer", "Book a Group class", "Fitness orientation"]
-        },
-        {
-            amount: 49,
-            duration: "month",
-            caption: "12 Months Membership",
-            benefits: ["Group classes", "Discuss fitness goals", "Group trainer", "Fitness orientation"]
-        },
-        {
-            amount: 65,
-            duration: "month",
-            caption: "Pay Every Month",
-            benefits: ["Group classes", "Discuss fitness goals", "Group trainer", "Fitness orientation"]
-        }
-    ]
-}
-
-export const ContactTexts = {
-    firstText: "call us today",
-    phone: "(+234)70-6910-6259",
-    paragraph: "At our gym, you can reach out to any of our trainers to schedule a session. Home services is also within the scope of out services. Your fitness is our concern! Health is wealth!",
-    button: "Schedule A Meet"
-}
-
-export const TestimonialTexts = {
-    firstText: "our testimonials",
-    secondText: "What Clients Say",
-    feedBacks: [
-        {
-            text: "I've been a member for six months, and the gym's supportive community and knowledgeable trainers have helped me surpass my fitness goals!",
-            person: "Darrell Murray",
-            type: "Client"
-        },
-        {
-            text: "The Yoga classes have transformed my life; I feel more centered, strong, and peaceful every time I step on the mat.",
-            person: "Derrick Rodriquez",
-            type: "Client"
-        },
-        {
-            text: "Attending the Special Class has been a game-changer! It's intense, but the results are incredible. Highly recommended!",
-            person: "Collins Thompson",
-            type: "Client"
-        }
-    ],
-}
-
-
 export const VarietyTexts = {
   firstText: "ค้นพบพันธุ์ข้าว",
   secondText: "พันธุ์ข้าวยอดนิยม",
@@ -142,52 +86,4 @@ export const VarietyTexts = {
       features: "เหนียวนุ่ม, สีแดงสวย, เหมาะทำขนมไทย"
     }
   ]
-}
-
-export const FooterTexts = {
-    underLogoText: "We are more than just a gym; we are a passionate and supportive fitness family dedicated to helping you achieve your health and wellness goals. Our mission is to create a positive and empowering environment that inspires you to challenge yourself, embrace a healthy lifestyle, and discover the best version of yourself.",
-    quickLinks: {
-        caption: "Quick Links",
-        links: [
-            {
-                name: "Home",
-                url: "/"
-            },
-            {
-                name: "About Us",
-                url: "/about"
-            },
-            {
-                name: "Schedule",
-                url: "/schedule"
-            },
-            {
-                name: "Gallery",
-                url: "/gallery"
-            },
-            {
-                name: "News",
-                url: "/news"
-            },
-            {
-                name: "Contacts",
-                url: "/contact"
-            },
-        ]
-    },
-    contacts: {
-        caption: "Quick Contacts",
-        names: [
-            {
-                name: "11567 Santa Monica Blvd, Los Angeles, CA 90025, United States",
-            },
-            {
-                name: "gym_nex@example.com",
-            },
-            {
-                name: "+1 424-248-8496",
-            }
-        ]
-    },
-    copyright: "Copyright 2023. All Right Reserved"
 }
