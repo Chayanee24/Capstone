@@ -57,6 +57,8 @@ export const saveAnalysisResult: RequestHandler = async (req, res) => {
       prediction,
       diseaseId,
       statisticResult,
+      latitude: riceImage?.latitude,
+      longitude: riceImage?.longitude
     })
   } catch (error: any) {
     res.status(500).json({

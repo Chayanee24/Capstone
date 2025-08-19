@@ -8,6 +8,7 @@ type NominatimResponse = {
     city?: string
     town?: string
     village?: string
+    province?: string
   }
 }
 
@@ -24,16 +25,17 @@ export const updateDiseaseStatisticService = async (
 
   // 📌 province จาก Nominatim
   const geoResponse = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=7&addressdetails=1`,
     { headers: { "User-Agent": "my-app" } }
   )
   const geoData = (await geoResponse.json()) as NominatimResponse
-  const province =
-    geoData.address?.state ||
-    geoData.address?.county ||
-    geoData.address?.city ||
-    geoData.address?.town ||
-    "Unknown"
+  // ✅ ใช้ state เป็นหลัก (คือจังหวัด)
+  let province = geoData.address?.province || "Unknown"
+  if (province.startsWith("จังหวัด")) {
+    province = province.replace("จังหวัด", "").trim()
+  }
+  //console.log("Full Nominatim response:", geoData)
+  //console.log(province)
 
   // 📌 หา disease_id
   const { data: disease, error: diseaseError } = await supabase
@@ -97,19 +99,41 @@ export const updateDiseaseStatisticService = async (
 }
 
 export const getAllStatisticsService = async () => {
-  const { data, error } = await supabase
-    .from("DiseaseStatistics")
-    .select(`
+    const { data, error } = await supabase
+  .from("DiseaseStatistics")
+  .select(`
+    id,
+    total_case,
+    year,
+    updated_at,
+    DiseaseInformations (
       id,
-      total_case,
-      year,
-      updated_at,
-      DiseaseInformations ( id, disease_name ),
-      Provinces ( id, province_name )
-    `)
-    .order("year", { ascending: false })
-    .order("updated_at", { ascending: false })
-
-  if (error) throw new Error(error.message)
-  return data
+      disease_name,
+      AnalysisResults (
+        id,
+        predicted_deficiency,
+        RiceImages (
+          id,
+          image_path,
+          latitude,
+          longitude,
+          created_at
+        )
+      )
+    ),
+    Provinces (
+      id,
+      province_name,
+      Region (
+        id,
+        region_name
+      )
+    )
+  `)
+  .order("year", { ascending: false })
+  .order("updated_at", { ascending: false })
+  
+    if (error) throw new Error(error.message)
+    return data
 }
+  
