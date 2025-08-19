@@ -42,8 +42,8 @@ export const saveAnalysisResult: RequestHandler = async (req, res) => {
 
     let statisticResult = null
     if (riceImage) {
-      console.log(riceImage.latitude)
-      console.log(riceImage.longitude)
+      //console.log(riceImage.latitude)
+      //console.log(riceImage.longitude)
       statisticResult = await updateDiseaseStatisticService(
         prediction,
         riceImage.latitude,
