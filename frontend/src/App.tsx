@@ -8,6 +8,7 @@ import DiseasePage from "./components/pages/DiseasePage";
 import VarietyPage from "./components/pages/VarietyPage";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
+import Report from "./components/pages/Report"
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/varieties" element={<VarietyPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/report" element={<Report />} />
       </Routes>
       {/* <Footer /> */}
     </div>

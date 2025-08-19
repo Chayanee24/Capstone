@@ -99,7 +99,7 @@ const DiseasePage = () => {
     <div className="w-full min-h-screen bg-zinc-900 p-6 flex flex-col items-center">
       <Zoom>
         <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-4 drop-shadow-lg">
-          ค้นหาโรคข้าว 🌾
+          ค้นหาโรคข้าว 🎑
         </h1>
       </Zoom>
 
