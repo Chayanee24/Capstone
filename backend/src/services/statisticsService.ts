@@ -29,13 +29,11 @@ export const updateDiseaseStatisticService = async (
     { headers: { "User-Agent": "my-app" } }
   )
   const geoData = (await geoResponse.json()) as NominatimResponse
-  const province =
-    geoData.address?.state ||
-    geoData.address?.county ||
-    geoData.address?.city ||
-    geoData.address?.town ||
-    "Unknown"
-
+  // ✅ ใช้ state เป็นหลัก (คือจังหวัด)
+  let province = geoData.address?.province || "Unknown"
+  if (province.startsWith("จังหวัด")) {
+    province = province.replace("จังหวัด", "").trim()
+  }
   // 📌 หา disease_id
   const { data: disease, error: diseaseError } = await supabase
     .from("DiseaseInformations")
