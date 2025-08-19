@@ -34,8 +34,8 @@ export const updateDiseaseStatisticService = async (
   if (province.startsWith("จังหวัด")) {
     province = province.replace("จังหวัด", "").trim()
   }
-  console.log("Full Nominatim response:", geoData)
-  console.log(province)
+  //console.log("Full Nominatim response:", geoData)
+  //console.log(province)
 
   // 📌 หา disease_id
   const { data: disease, error: diseaseError } = await supabase
