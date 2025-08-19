@@ -40,14 +40,27 @@ const Diagnosis = () => {
     setLoading(true)
 
     try {
+
+      // ดึงตำแหน่งปัจจุบันด้วย Geolocation API
+      const position = await new Promise<GeolocationPosition>((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+      )
+
+      const { latitude, longitude } = position.coords
+
       const formData = new FormData()
       formData.append("image", selectedImage)
+      formData.append("latitude", latitude.toString())
+      formData.append("longitude", longitude.toString())
 
       // เรียก API วิเคราะห์ภาพ
       const analyzeResponse = await fetch("http://localhost:3000/uploads/analyze", {
         method: "POST",
         body: formData,
       })
+
+      console.log(analyzeResponse)
+      
       if (!analyzeResponse.ok) throw new Error("ไม่สามารถวิเคราะห์ได้")
       const analyzeData: { prediction: string } = await analyzeResponse.json()
 
@@ -61,6 +74,9 @@ const Diagnosis = () => {
         : Array.isArray(allDataRaw.data)
         ? allDataRaw.data
         : []
+
+      console.log("Prediction:", analyzeData)
+      console.log("All diseases:", allData.map(d => d.disease_name))
 
       const disease = allData.find((d) => d.disease_name === analyzeData.prediction)
       if (!disease) throw new Error("ไม่พบข้อมูลโรค")

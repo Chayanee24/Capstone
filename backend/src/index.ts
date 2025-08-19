@@ -8,8 +8,9 @@ import userRoutes from './routes/users';
 import roleRoutes from './routes/roles';
 import uploadRoutes from './routes/upload';
 import diseaseRoutes from './routes/disease';
+import statisticRoutes from './routes/statistics';
 
-import { seedRoles, seedDiseaseInformations, seedDeficiencySolutions, seedUsers, seedRegions } from './seed';
+import { seedRoles, seedDiseaseInformations, seedDeficiencySolutions, seedUsers, seedRegions, seedProvinces } from './seed';
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use('/users', userRoutes);
 app.use('/roles', roleRoutes);
 app.use('/uploads', uploadRoutes);
 app.use('/disease', diseaseRoutes);
+app.use('/Statistic', statisticRoutes)
 
 //เริ่มต้น server
 async function startServer() {
@@ -46,6 +48,9 @@ async function startServer() {
   await seedDeficiencySolutions();
   await seedUsers();
   await seedRegions();
+  await seedProvinces();
+  //await seedDiseaseStatistics();
+
   app.listen(PORT, () => {
     console.log(`🚀 Server started on http://localhost:${PORT}`);
   });

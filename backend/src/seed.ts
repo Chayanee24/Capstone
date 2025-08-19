@@ -182,3 +182,106 @@ export async function seedRegions() {
   }
   
 }
+
+export async function seedProvinces() {
+  const { data, error } = await supabase.from('Provinces').select('id').limit(1)
+  
+  if (error) {
+    console.error('❌ Error checking Provinces:', error)
+    return
+  }
+
+  if (data.length == 0) {
+    const provinces = [
+      // 🟦 ภาคกลาง (id=3)
+      { province_name: 'กรุงเทพมหานคร', region_id: 3 },
+      { province_name: 'ชัยนาท', region_id: 3 },
+      { province_name: 'นครนายก', region_id: 3 },
+      { province_name: 'นครปฐม', region_id: 3 },
+      { province_name: 'นนทบุรี', region_id: 3 },
+      { province_name: 'ปทุมธานี', region_id: 3 },
+      { province_name: 'พระนครศรีอยุธยา', region_id: 3 },
+      { province_name: 'ลพบุรี', region_id: 3 },
+      { province_name: 'สมุทรปราการ', region_id: 3 },
+      { province_name: 'สมุทรสงคราม', region_id: 3 },
+      { province_name: 'สมุทรสาคร', region_id: 3 },
+      { province_name: 'สระบุรี', region_id: 3 },
+      { province_name: 'สิงห์บุรี', region_id: 3 },
+      { province_name: 'อ่างทอง', region_id: 3 },
+      { province_name: 'อุทัยธานี', region_id: 3 },
+
+      // 🟥 ภาคเหนือ (id=1)
+      { province_name: 'เชียงใหม่', region_id: 1 },
+      { province_name: 'เชียงราย', region_id: 1 },
+      { province_name: 'ลำพูน', region_id: 1 },
+      { province_name: 'ลำปาง', region_id: 1 },
+      { province_name: 'พะเยา', region_id: 1 },
+      { province_name: 'น่าน', region_id: 1 },
+      { province_name: 'แพร่', region_id: 1 },
+      { province_name: 'แม่ฮ่องสอน', region_id: 1 },
+      { province_name: 'ตาก', region_id: 1 },
+      { province_name: 'สุโขทัย', region_id: 1 },
+      { province_name: 'พิษณุโลก', region_id: 1 },
+      { province_name: 'อุตรดิตถ์', region_id: 1 },
+      { province_name: 'เพชรบูรณ์', region_id: 1 },
+      { province_name: 'พิจิตร', region_id: 1 },
+      { province_name: 'กำแพงเพชร', region_id: 1 },
+      { province_name: 'นครสวรรค์', region_id: 1 },
+
+      // 🟨 ภาคอีสาน (id=2)
+      { province_name: 'กาฬสินธุ์', region_id: 2 },
+      { province_name: 'ขอนแก่น', region_id: 2 },
+      { province_name: 'ชัยภูมิ', region_id: 2 },
+      { province_name: 'นครพนม', region_id: 2 },
+      { province_name: 'นครราชสีมา', region_id: 2 },
+      { province_name: 'บึงกาฬ', region_id: 2 },
+      { province_name: 'บุรีรัมย์', region_id: 2 },
+      { province_name: 'มหาสารคาม', region_id: 2 },
+      { province_name: 'มุกดาหาร', region_id: 2 },
+      { province_name: 'ยโสธร', region_id: 2 },
+      { province_name: 'ร้อยเอ็ด', region_id: 2 },
+      { province_name: 'ศรีสะเกษ', region_id: 2 },
+      { province_name: 'สกลนคร', region_id: 2 },
+      { province_name: 'สุรินทร์', region_id: 2 },
+      { province_name: 'หนองคาย', region_id: 2 },
+      { province_name: 'หนองบัวลำภู', region_id: 2 },
+      { province_name: 'อำนาจเจริญ', region_id: 2 },
+      { province_name: 'อุดรธานี', region_id: 2 },
+      { province_name: 'อุบลราชธานี', region_id: 2 },
+
+      // 🟩 ภาคตะวันออก (id=4)
+      { province_name: 'จันทบุรี', region_id: 4 },
+      { province_name: 'ฉะเชิงเทรา', region_id: 4 },
+      { province_name: 'ชลบุรี', region_id: 4 },
+      { province_name: 'ตราด', region_id: 4 },
+      { province_name: 'ปราจีนบุรี', region_id: 4 },
+      { province_name: 'ระยอง', region_id: 4 },
+      { province_name: 'สระแก้ว', region_id: 4 },
+
+      // 🟫 ภาคตะวันตก (id=5)
+      { province_name: 'กาญจนบุรี', region_id: 5 },
+      { province_name: 'ประจวบคีรีขันธ์', region_id: 5 },
+      { province_name: 'เพชรบุรี', region_id: 5 },
+      { province_name: 'ราชบุรี', region_id: 5 },
+      { province_name: 'สุพรรณบุรี', region_id: 5 },
+
+      // ⬛ ภาคใต้ (id=6)
+      { province_name: 'กระบี่', region_id: 6 },
+      { province_name: 'ชุมพร', region_id: 6 },
+      { province_name: 'ตรัง', region_id: 6 },
+      { province_name: 'นครศรีธรรมราช', region_id: 6 },
+      { province_name: 'นราธิวาส', region_id: 6 },
+      { province_name: 'ปัตตานี', region_id: 6 },
+      { province_name: 'พังงา', region_id: 6 },
+      { province_name: 'พัทลุง', region_id: 6 },
+      { province_name: 'ภูเก็ต', region_id: 6 },
+      { province_name: 'ระนอง', region_id: 6 },
+      { province_name: 'สงขลา', region_id: 6 },
+      { province_name: 'สตูล', region_id: 6 },
+      { province_name: 'สุราษฎร์ธานี', region_id: 6 },
+      { province_name: 'ยะลา', region_id: 6 },
+    ]
+
+    await supabase.from('Provinces').insert(provinces)
+  }
+}
