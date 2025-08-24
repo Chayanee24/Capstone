@@ -15,7 +15,7 @@
     "antd": "^5.26.7",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
-    "lucide-react": "^0.539.0",
+    "lucide-react": "^0.541.0",
     "phosphor-react": "^1.4.1",
     "react": "^19.1.0",
     "react-awesome-reveal": "^4.3.1",

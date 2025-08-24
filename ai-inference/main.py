@@ -13,12 +13,12 @@ class ImageRequest(BaseModel):
 
 # 🔹 โหลด TFLite model
 interpreter = tf.lite.Interpreter(
-    model_path="C:/Users/User/Documents/GitHub/Capstone/ai-inference/rice_disease_model.tflite"
+    model_path= "C:/Users/HP/Documents/GitHub/Capstone/ai-inference/rice_disease_model(9 types).tflite"
 )
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt
-with open("C:/Users/User/Documents/GitHub/Capstone/ai-inference/labels.txt", "r", encoding="utf-8-sig") as f:
+with open("C:/Users/HP/Documents/GitHub/Capstone/ai-inference/labels (1).txt", "r", encoding="utf-8-sig") as f:
     label_map = [line.strip() for line in f.readlines()]
 
 # 🔹 ดึง input/output tensor
@@ -34,7 +34,7 @@ def predict_from_url(image_url: str):
     interpreter.set_tensor(input_details[0]['index'], img)
     interpreter.invoke()
 
-    output = interpreter.get_tensor(output_details[0]['index'])[0]  # shape: (num_classes,)
+    output = interpreter.get_tensor(output_details[0]['index'])[0]
     predicted_index = int(np.argmax(output))
     confidence = float(np.max(output))
     predicted_label = label_map[predicted_index]
