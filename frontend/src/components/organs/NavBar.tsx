@@ -24,7 +24,7 @@ const NavBar = () => {
 
         {/* Logo */}
         <div className="w-full flex justify-start items-center py-6 px-6 lg:px-16">
-          <Link to={`/`} className="font-extrabold flex items-center relative md:text-2xl text-lg">
+          <div className="font-extrabold flex items-center relative md:text-2xl text-lg">
             <Text as="span" className="text-green-400 absolute -top-3 md:left-5 left-3">
               <Leaf size={25} weight="fill" />
             </Text>
@@ -32,7 +32,7 @@ const NavBar = () => {
             <Text as="span" className="bg-gradient-to-r from-green-400 to-yellow-400 bg-clip-text text-transparent">
               Care
             </Text>
-          </Link>
+          </div>
         </div>
 
 
