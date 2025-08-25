@@ -1,0 +1,13 @@
+.navbarContainer {
+  background-color: #11b166;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 6px 6px rgba(0,0,0,0.23);
+  height: 70vh;
+  width: 100%;        /* mobile full width */
+  max-width: 400px;   /* tablet/desktop limit */
+  transition: transform 0.5s ease-in-out; /* smooth slide */
+}
