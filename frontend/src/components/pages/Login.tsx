@@ -28,10 +28,12 @@ function Login() {
 
         // ดึงข้อมูล user หลัง login
         const roleRes = await axios.get(`http://localhost:3000/users/${email}`);
+        const user_id = roleRes.data?.data?.profile.id;
         const profile = roleRes.data?.data?.profile;
         const roleName = profile?.Roles?.role_name || "user"; // default role
         const displayName = roleRes.data?.data?.user_metadata?.display_name || email;
 
+        localStorage.setItem("id", user_id);
         const loggedUser = { email, role_name: roleName, display_name: displayName };
         setUser(loggedUser);
 

@@ -47,11 +47,13 @@ const Diagnosis = () => {
       )
 
       const { latitude, longitude } = position.coords
+      const userId = localStorage.getItem("id");
 
       const formData = new FormData()
       formData.append("image", selectedImage)
       formData.append("latitude", latitude.toString())
       formData.append("longitude", longitude.toString())
+      formData.append("user_id", userId ?? "")
 
       // เรียก API วิเคราะห์ภาพ
       const analyzeResponse = await fetch("http://localhost:3000/uploads/analyze", {

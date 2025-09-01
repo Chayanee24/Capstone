@@ -6,7 +6,7 @@ import supabase from "../services/supabase"
 export const uploadImageAndAnalyze: RequestHandler = async (req, res, next) => {
   try {
     const file = req.file
-    const { latitude, longitude } = req.body
+    const { latitude, longitude, user_id } = req.body
 
     if (!file) {
       res.status(400).json({ error: "No file uploaded" })
@@ -47,7 +47,7 @@ export const uploadImageAndAnalyze: RequestHandler = async (req, res, next) => {
           image_path: imageUrl,
           latitude,
           longitude,
-          user_id: 1,
+          user_id: user_id,
         },
       ])
       .select("id")
