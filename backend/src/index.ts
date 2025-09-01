@@ -11,6 +11,8 @@ import diseaseRoutes from './routes/disease';
 import statisticRoutes from './routes/statistics';
 
 import { seedRoles, seedDiseaseInformations, seedDeficiencySolutions, seedUsers, seedRegions, seedProvinces } from './seed';
+import { saveAnalysisResult } from './controllers/analysisController';
+import { getStatisticsAll, updateDiseaseStatistic } from './controllers/statisticsController';
 
 dotenv.config();
 
@@ -43,17 +45,33 @@ app.use('/Statistic', statisticRoutes)
 
 //เริ่มต้น server
 async function startServer() {
+  
+  if (process.env.NODE_ENV === "test") {
+    
+    app.use((req, res, next) => {
+      if (req.body && req.body.imageID) {
+        res.locals.analysisData = req.body;
+      }
+      next();
+    });
+
+    app.post("/analysis/save", saveAnalysisResult);
+    app.put("/Statistic", updateDiseaseStatistic);
+    app.get("/Statistic", getStatisticsAll);
+  }
+
   await seedRoles();
   await seedDiseaseInformations();
   await seedDeficiencySolutions();
   await seedUsers();
   await seedRegions();
   await seedProvinces();
-  //await seedDiseaseStatistics();
 
-  app.listen(PORT, () => {
-    console.log(`🚀 Server started on http://localhost:${PORT}`);
-  });
+  if (require.main === module) {
+    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+  }
 }
 
 startServer();
+
+export default app;

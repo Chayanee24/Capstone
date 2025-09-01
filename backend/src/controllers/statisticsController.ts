@@ -1,3 +1,4 @@
+//StatisticsController.ts
 import { Request, Response } from "express"
 import { updateDiseaseStatisticService, getAllStatisticsService } from "../services/statisticsService"
 

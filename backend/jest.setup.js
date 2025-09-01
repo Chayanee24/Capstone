@@ -1,0 +1,2 @@
+process.env.SUPABASE_URL = "https://tksfuvcxsgglqhdovcer.supabase.co";
+process.env.SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrc2Z1dmN4c2dnbHFoZG92Y2VyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTUyOTIxMCwiZXhwIjoyMDY3MTA1MjEwfQ.Yh1lz7uEsKBOag8QwqJPTuw71ZC7hfKltL4JhLg1ky0";

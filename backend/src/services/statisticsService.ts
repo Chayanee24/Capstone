@@ -1,3 +1,4 @@
+//statisticsService.ts
 import supabase from "./supabase"
 import fetch from "node-fetch"
 
