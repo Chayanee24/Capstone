@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: [
-      'surrounding-cell-tracker-aims.trycloudflare.com',
+      'barcelona-galaxy-liberty-per.trycloudflare.com',
     ],
     port: 5173, // ✅ เปลี่ยนกลับมาใช้ 5173
     proxy: {

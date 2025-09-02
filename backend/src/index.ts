@@ -24,7 +24,7 @@ const HOST = process.env.HOST || "0.0.0.0";
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://surrounding-cell-tracker-aims.trycloudflare.com"
+    "https://barcelona-galaxy-liberty-per.trycloudflare.com"
   ],
   credentials: true
 }));

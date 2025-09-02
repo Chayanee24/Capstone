@@ -39,6 +39,14 @@ def predict_from_url(image_url: str):
     confidence = float(np.max(output))
     predicted_label = label_map[predicted_index]
 
+    # ✅ กรองภาพที่ไม่น่าใช่ข้าว
+    if confidence < 0.7:
+        return {
+            "label": "Unknown / Not Rice",
+            "confidence": confidence,
+            "raw_output": output.tolist()
+        }
+
     return {
         "label": predicted_label,
         "confidence": confidence,
