@@ -23,10 +23,10 @@ const About = () => {
                     </Fade>
                 </div>
                 <div className="w-full md:h-[400px] h-[300px] md:order-2 order-1 grid grid-cols-3 grid-rows-3">
-                    <Image alt="Welcome Image" objectCover="object-cover" className="col-span-3 row-span-2 w-full h-full" image={Image1} />
-                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full" image={Image2} />
-                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full border border-amber-500" image={Image3} />
-                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full" image={Image4} />
+                    <Image alt="Welcome Image" objectCover="object-cover" className="col-span-3 row-span-2 w-full h-full" image={Image} />
+                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full" image={Image} />
+                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full border border-amber-500" image={Image} />
+                    <Image alt="Welcome Image" objectCover="object-cover" className="w-full h-full" image={Image} />
                 </div>
             </main>
 

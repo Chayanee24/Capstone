@@ -14,6 +14,7 @@ import {
   Legend,
 } from "recharts";
 import { Slide, Zoom } from "react-awesome-reveal";
+import { API_URL } from "../../config/api";
 
 type DiseaseReport = {
   id: number;
@@ -30,7 +31,7 @@ const COLORS = ["#4ade80", "#22d3ee", "#facc15", "#f97316", "#f43f5e", "#8b5cf6"
 
 export default function Report() {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyAtQq7VaNfQTFJLt4X10G21w4rVctLZr6c",
+    googleMapsApiKey: "AIzaSyDw7TcjDnnZxMpPZBXUMECRMSAkiwagkeY",
   });
 
   const [reports, setReports] = useState<DiseaseReport[]>([]);
@@ -44,7 +45,7 @@ export default function Report() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const res = await fetch("http://localhost:3000/Statistic");
+        const res = await fetch(`${API_URL}/Statistic`);
         if (!res.ok) throw new Error("เกิดข้อผิดพลาดในการดึงข้อมูล");
         const json = await res.json();
 

@@ -1,4 +1,4 @@
-// index.ts
+// backend/index.ts
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -17,10 +17,18 @@ import { getStatisticsAll, updateDiseaseStatistic } from './controllers/statisti
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT: number = Number(process.env.PORT) || 3000;
+const HOST = process.env.HOST || "0.0.0.0";
 
 //Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://surrounding-cell-tracker-aims.trycloudflare.com"
+  ],
+  credentials: true
+}));
+
 app.options('*', cors());
 app.use(express.json());
 
@@ -68,8 +76,11 @@ async function startServer() {
   await seedProvinces();
 
   if (require.main === module) {
-    app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+    app.listen(PORT, HOST, () => {
+      console.log(`Server running on http://${HOST}:${PORT}`);
+    });
   }
+  
 }
 
 startServer();

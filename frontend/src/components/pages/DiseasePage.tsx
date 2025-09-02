@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Slide, Zoom } from "react-awesome-reveal";
+import { API_URL } from "../../config/api";
 
 interface SolutionItem {
   solution_text: string;
@@ -11,7 +12,7 @@ interface DiseaseInfo {
   DeficiencySolutions?: SolutionItem[];
 }
 
-const API_ALL = "http://localhost:3000/disease/all";
+const API_ALL = `${API_URL}/disease/all`;
 
 const normalizeThai = (s: string) =>
   s?.normalize("NFC").replace(/\s+/g, " ").trim();

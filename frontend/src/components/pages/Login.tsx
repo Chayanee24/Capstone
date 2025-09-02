@@ -4,6 +4,7 @@ import axios from "axios";
 import { Leaf } from "phosphor-react";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { API_URL } from "../../config/api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,13 +22,13 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/users/login", { email, password });
+      const res = await axios.post(`${API_URL}/users/login`, { email, password });
 
       if (res.data.success) {
         localStorage.setItem("email", email);
 
         // ดึงข้อมูล user หลัง login
-        const roleRes = await axios.get(`http://localhost:3000/users/${email}`);
+        const roleRes = await axios.get(`${API_URL}/users/${email}`);
         const user_id = roleRes.data?.data?.profile.id;
         const profile = roleRes.data?.data?.profile;
         const roleName = profile?.Roles?.role_name || "user"; // default role

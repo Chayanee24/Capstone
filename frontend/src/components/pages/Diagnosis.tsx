@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Slide, Zoom } from "react-awesome-reveal"
+import { API_URL } from "../../config/api";
 
 interface Disease {
   disease_name: string
@@ -56,7 +57,7 @@ const Diagnosis = () => {
       formData.append("user_id", userId ?? "")
 
       // เรียก API วิเคราะห์ภาพ
-      const analyzeResponse = await fetch("http://localhost:3000/uploads/analyze", {
+      const analyzeResponse = await fetch(`${API_URL}/uploads/analyze`, {
         method: "POST",
         body: formData,
       })
@@ -67,7 +68,7 @@ const Diagnosis = () => {
       const analyzeData: { prediction: string } = await analyzeResponse.json()
 
       // โหลดข้อมูลโรคทั้งหมด
-      const allResponse = await fetch("http://localhost:3000/disease/all")
+      const allResponse = await fetch(`${API_URL}/disease/all`)
       if (!allResponse.ok) throw new Error("ไม่สามารถโหลดข้อมูลโรคได้")
       const allDataRaw = await allResponse.json()
 
@@ -98,7 +99,7 @@ const Diagnosis = () => {
   }
 
   // ฟังก์ชันช่วยแยกบรรทัดและลบ <u>
-  const formatSymptom = (text?: string) => {
+  /*const formatSymptom = (text?: string) => {
     if (!text) return ["- ไม่มีข้อมูล"]
     return text
       .replace(/<u>/g, "")
@@ -106,7 +107,7 @@ const Diagnosis = () => {
       .split(/(?:\r?\n|;|\.|\s{2,})/) // แยกบรรทัดตาม newline หรือจุดหรือเว้นวรรคมากกว่า 1
       .map((line) => line.trim())
       .filter(Boolean)
-  }
+  }*/
 
   return (
     <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Leaf } from "phosphor-react";
+import { API_URL } from "../../config/api";
 
 interface Roles {
   id: number;
@@ -23,7 +24,7 @@ function Register() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/roles")
+    fetch(`${API_URL}/roles`)
       .then((res) => res.json())
       .then((data) => setRoles(data.data))
       .catch((err) => console.error("error fetching roles:", err));
@@ -39,7 +40,7 @@ function Register() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/users/register", formData);
+      const res = await axios.post(`${API_URL}/users/register`, formData);
       if (res.status === 200 || res.status === 201) {
         alert("สมัครสมาชิกสำเร็จ!");
         navigate("/"); // ไปหน้า Login

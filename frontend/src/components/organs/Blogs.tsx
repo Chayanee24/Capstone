@@ -7,7 +7,7 @@ import { VarietyTexts } from "../particles/Data"
 import { useCallback } from "react";
 import { Image } from "../atoms/Image";
 import { Link } from "react-router-dom";
-import { ChatsCircle, Clock } from "@phosphor-icons/react";
+//import { ChatsCircle, Clock } from "@phosphor-icons/react";
 
 
 const Blogs = () => {
@@ -15,11 +15,11 @@ const Blogs = () => {
     const renderImage = useCallback((element: number) => {
         switch (element) {
             case 0:
-                return Image1;
+                return Image;
             case 1:
-                return Image2;
+                return Image;
             case 2:
-                return Image3;
+                return Image;
             default:
                 return "";
         }
