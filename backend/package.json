@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx jest --detectOpenHandles",
     "start": "ts-node src/index.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "serve": "node dist/index.js"
   },
   "keywords": [],
