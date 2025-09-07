@@ -283,3 +283,373 @@ export async function seedProvinces() {
     await supabase.from('Provinces').insert(provinces)
   }
 }
+
+export async function seedRiceVariety() {
+  const { data, error } = await supabase.from('RiceVariety').select('id').limit(1)
+
+  if (error) {
+    console.error('❌ Error checking RiceVariety :', error)
+    return
+  }
+
+  if (data.length == 0) {
+    await supabase.from('RiceVariety').insert([
+      { name_th: 'สุพรรณบุรี 60', 
+        name_en : 'Suphan Buri 60',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'เขตชลประทานภาคกลาง ภาคตะวันตก และภาคตะวันออก',
+        average_yield: '700 กิโลกรัมต่อไร่'},//1
+      { name_th: 'สุพรรณบุรี 90', 
+        name_en : 'Suphan Buri 90',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ภาคกลาง โดยเฉพาะอย่างยิ่งในแหล่งที่มีการระบาดของ เพลี้ยกระโดดสีน้ำตาล โรคใบหงิก โรคใบสีส้ม และโรคไหม้',
+        average_yield: '600 กิโลกรัมต่อไร่'},//2
+      { name_th: 'สุพรรณบุรี 1', 
+        name_en : 'Suphan Buri 1',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคในเขตชลประทาน',
+        average_yield: '806 กิโลกรัมต่อไร่'},//3
+      { name_th: 'สุพรรณบุรี 2', 
+        name_en : 'Suphan Buri 2',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'เขตพื้นที่ปลูกข้าวนาชลประทานของภาคกลาง ภาคตะวันออก และ ภาคตะวันตก',
+        average_yield: '700 กิโลกรัมต่อไร่'},//4
+      { name_th: 'กข7', 
+        name_en : 'RD7',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคที่มีการชลประทาน',
+        average_yield: '672 กิโลกรัมต่อไร่'},//5
+      { name_th: 'กข23', 
+        name_en : 'RD23',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคในเขตนาชลประทาน',
+        average_yield: '800 กิโลกรัมต่อไร่'},//6
+      { name_th: 'กข1', 
+        name_en : 'RD1',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคที่มีการนาชลประทาน',
+        average_yield: '742 กิโลกรัมต่อไร'},//7
+      { name_th: 'กข3', 
+        name_en : 'RD3',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคในเขตชลประทาน',
+        average_yield: '667 กิโลกรัมต่อไร่'},//8
+      { name_th: 'กข9', 
+        name_en : 'RD9',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคที่มีการนาชลประทาน',
+        average_yield: '657 กิโลกรัมต่อไร่'},//9
+      { name_th: 'กข11', 
+        name_en : 'RD11',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคในเขตนาชลประทาน',
+        average_yield: '700 กิโลกรัมต่อไร่'},//10
+      { name_th: 'กข21', 
+        name_en : 'RD21',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ทุกภาคในเขตนาชลประทาน',
+        average_yield: '700 กิโลกรัมต่อไร่'},//11
+      { name_th: 'หางยี 71', 
+        name_en : 'Hahng Yi 71',
+        type: 'ข้าวเหนียว',
+        recommended_area: 'ภาคตะวันออกเฉียงเหนือ',
+        average_yield: '506 กิโลกรัมต่อไร่'},//12
+      { name_th: 'แก่นจันทร์', 
+        name_en : 'Gaen Jan',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'นาน้ำฝนภาคใต้',
+        average_yield: '660 กิโลกรัมต่อไร่'},//13
+      { name_th: 'กข13', 
+        name_en : 'RD13',
+        type: 'ข้าวเจ้า',
+        recommended_area: 'ภาคใต้',
+        average_yield: '450 กิโลกรัมต่อไร่'},//14
+    ])  
+  }
+  
+}
+
+export async function seedMorphology() {
+  const { data, error } = await supabase.from('Morphology').select('id').limit(1)
+
+  if (error) {
+    console.error('❌ Error checking Morphology :', error)
+    return
+  }
+
+  if (data.length == 0) {
+    await supabase.from('Morphology').insert([
+      { characteristic: 'สูงประมาณ 133 เซนติเมตร', variety_id: 1},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 1},
+      { characteristic: 'ใบสีเขียวเข้ม ทรงกอตั้ง รวงแน่น ระแง้ถี่ คอรวงสั้น เมล็ดรูปร่างเรียว ยาว ท้องไข่น้อย', variety_id: 1},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 4 สัปดาห์', variety_id: 1},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.4 x 2.5 x 2.0 มิลลิเมตร', variety_id: 1},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.5 x 2.2 x 1.8 มิลลิเมตร', variety_id: 1},
+      { characteristic: 'ปริมาณอมิโลส 23 -25 %', variety_id: 1},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน นุ่ม', variety_id: 1},
+      { characteristic: 'สูงประมาณ 120 เซนติเมตร', variety_id: 2},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 2},
+      { characteristic: 'อายุเก็บเกี่ยว ประมาณ 120 วัน', variety_id: 2},
+      { characteristic: 'ทรงกอตั้ง ใบสีเขียวเข้ม ใบธงยาว ค่อนข้างตั้งตรง', variety_id: 2},
+      { characteristic: 'คอรวงยาว รวงยาว แน่น ระแง้ถี่ ต้นแข็ง เมล็ดยาวเรียว', variety_id: 2},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.1 x 2.7 x 2.0 มิลลิเมตร', variety_id: 2},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.4 x 2.2 x 1.8 มิลลิเมตร', variety_id: 2},
+      { characteristic: 'ปริมาณอมิโลส 25-28 %', variety_id: 2},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน แข็ง', variety_id: 2},
+      { characteristic: 'สูงประมาณ 125 เซนติเมตร', variety_id: 3},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 3},
+      { characteristic: 'อายุเก็บเกี่ยว ประมาณ 120 วัน', variety_id: 3},
+      { characteristic: 'ทรงกอตั้ง ต้นแข็งไม่ล้ม ใบสีเขียวเข้ม มีขน กาบใบและปล้องสีเขียว ใบธงยาวค่อนข้างตั้งตรง คอรวงยาว รวงค่อนข้างแน่น', variety_id: 3},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 3},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 22 วัน', variety_id: 3},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.0 x 2.4 x 2.0 มิลลิเมตร', variety_id: 3},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.3 x 2.2 x 1.8 มิลลิเมตร', variety_id: 3},
+      { characteristic: 'ปริมาณอมิโลส 29 %', variety_id: 3},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน แข็ง', variety_id: 3},
+      { characteristic: 'สูงประมาณ 122 เซนติเมตร', variety_id: 4},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 4},
+      { characteristic: 'อายุเก็บเกี่ยว ประมาณ 115 วัน', variety_id: 4},
+      { characteristic: 'ทรงกอตั้ง ใบสีเขียวมีขน การแก่ของใบปานกลาง กาบใบและปล้องสีเขียว ใบธงยาวปานกลางและค่อนข้างตั้งตรง คอรวงยาว รวงยาว ระแง้ค่อนข้างถี่', variety_id: 4},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง มีขน', variety_id: 4},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 6 สัปดาห์', variety_id: 4},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 9.9 x 2.5 x 2.0 มิลลิเมตร', variety_id: 4},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.3 x 2.2 x 1.8 มิลลิเมตร', variety_id: 4},
+      { characteristic: 'ปริมาณอมิโลส 22-23 %', variety_id: 4},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน นุ่ม', variety_id: 4},
+      { characteristic: 'สูงประมาณ 115 เซนติเมตร', variety_id: 5},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 5},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 125 วัน', variety_id: 5},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 5},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 5},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 1 สัปดาห์', variety_id: 5},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา =9.7 x 2.7 x 2.0 มิลลิเมตร', variety_id: 5},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.2 x 2.3 x 1.8 มิลลิเมตร', variety_id: 5},
+      { characteristic: 'ปริมาณอมิโลส 24-28 %', variety_id: 5},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน นุ่ม', variety_id: 5},
+      { characteristic: 'สูงประมาณ 115-120 เซนติเมตร', variety_id: 6},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 6},
+      { characteristic: 'อายุเก็บเกี่ยว ประมาณ 125 วัน', variety_id: 6},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 6},
+      { characteristic: 'ลำต้นและใบมีสีเขียวอ่อน ใบธงตั้ง และค่อนข้างยาว รวงอยู่ใต้ใบ แตกกอดี', variety_id: 6},
+      { characteristic: 'ข้าวเปลือกสีฟาง', variety_id: 6},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 5 สัปดาห์', variety_id: 6},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 6},
+      { characteristic: 'ปริมาณอมิโลส 25-30 %', variety_id: 6},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน นุ่ม', variety_id: 6},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 9.9 x 2.5 x 2.0 มิลลิเมตร', variety_id: 6},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.3 x 2.2 x 1.8 มิลลิเมตร', variety_id: 6},
+      { characteristic: 'สูงประมาณ 115 เซนติเมตร', variety_id: 7},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 7},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 130 วัน', variety_id: 7},
+      { characteristic: 'ลําต้นและใบสีเขียวอ่อน ใบธงตั้งตรง เมล็ดเรียวยาว', variety_id: 7},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 7},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 7},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 3 สัปดาห์', variety_id: 7},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.0 x 2.5 x 2.0 มิลลิเมตร', variety_id: 7},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.1 x 2.2 x 1.8 มิลลิเมตร', variety_id: 7},
+      { characteristic: 'ปริมาณอมิโลส 29-30%', variety_id: 7},
+      { characteristic: 'คุณภาพข้าวสุกร่วน แข็ง', variety_id: 7},
+      { characteristic: 'สูงประมาณ 100 เซนติเมตร', variety_id: 8},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 8},
+      { characteristic: 'ลําต้นและใบสีเขียว เมล็ดเรียวยาว', variety_id: 8},
+      { characteristic: 'เมล็ดข้าวเปลือกสีนํ้าตาล', variety_id: 8},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 128 วัน', variety_id: 8},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 3 สัปดาห์', variety_id: 8},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.3 x 2.7 x 2.0 มิลลิเมตร', variety_id: 8},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.2 x 2.2 x 1.8 มิลลิเมตร', variety_id: 8},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 8},
+      { characteristic: 'ปริมาณอมิโลส 29-31%', variety_id: 8},
+      { characteristic: 'คุณภาพข้าวสุกร่วน แข็ง', variety_id: 8},
+      { characteristic: 'สูงประมาณ 105 เซนติเมตร', variety_id: 9},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 9},
+      { characteristic: 'ทรงกอตั้งตรง สีเขียวเข้ม ฟางแข็งไม่ล้มง่าย', variety_id: 9},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 9},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 115-125 วัน', variety_id: 9},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 9},
+      { characteristic: 'ระยะพักตัวของเมล็ดพันธุ์ประมาณ 5 สัปดาห์', variety_id: 9},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.0 x 2.7 x 2.0 มิลลิเมตร', variety_id: 9},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.2 x 2.3 x 1.8 มิลลิเมตร', variety_id: 9},
+      { characteristic: 'ปริมาณอมิโลส 29-31 %', variety_id: 9},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน แข็ง', variety_id: 9},
+      { characteristic: 'สูงประมาณ 115 เซนติเมตร', variety_id: 10},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 10},
+      { characteristic: 'ทรงกอตั้งตรงสีเขียวเข้ม ฟางแข็ง ใบธงยาวปานกลาง แตกกอมาก', variety_id: 10},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 10},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 135 วัน', variety_id: 10},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 4 สัปดาห์', variety_id: 10},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.9 x 2.6 x 2.1 มิลลิเมตร', variety_id: 10},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.6 x 2.37 x 1.8 มิลลิเมตร', variety_id: 10},
+      { characteristic: 'ปริมาณอมิโลส 29-32 %', variety_id: 10},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน แข็ง', variety_id: 10},
+      { characteristic: 'เมล็ดร่วงยาก', variety_id: 10},
+      { characteristic: 'สูงประมาณ 100-125 เซนติเมตร', variety_id: 11},
+      { characteristic: 'ไม่ไวต่อช่วงแสง', variety_id: 11},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 120-130 วัน', variety_id: 11},
+      { characteristic: 'ลำต้นใหญ่ แต่ค่อนข้างอ่อน รวงแน่น อยู่ใต้ใบธง', variety_id: 11},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟางกระน้ำตาล', variety_id: 11},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 4 สัปดาห์', variety_id: 11},
+      { characteristic: 'ท้องไข่น้อย', variety_id: 11},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 10.2 x 2.7 x 2.0 มิลลิเมตร', variety_id: 11},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.3 x 2.3 x 1.8 มิลลิเมตร', variety_id: 11},
+      { characteristic: 'ปริมาณอมิโลส 17-20 %', variety_id: 11},
+      { characteristic: 'คุณภาพข้าวสุก นุ่ม', variety_id: 11},
+      { characteristic: 'สูงประมาณ 152 เซนติเมตร', variety_id: 12},
+      { characteristic: 'ไวต่อช่วงแสง ปลูกได้เฉพาะฤดูนาป', variety_id: 12},
+      { characteristic: 'ลําต้นสีเขียว ใบแคบ และยาว สีเขียวเข้มรวงอ่อนมีระแง้แผ่ออกคล้ายตีนนก', variety_id: 12},
+      { characteristic: 'เมล็ดข้าวยาวเรียว', variety_id: 12},
+      { characteristic: 'ข้าวเปลือกสีนําตาล', variety_id: 12},
+      { characteristic: 'อายุเก็บเกียว ประมาณ 4 พฤศจิกายน', variety_id: 12},
+      { characteristic: 'ระยะพักตัวของเมล็ด ประมาณ 1 สัปดาห', variety_id: 12},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว xกว้าง x หนา = 10.2 x 2.8 x 2.0 มิลลิเมตร', variety_id: 12},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว xกว้าง x หนา = 7.1 x 2.1 x 1.8 มิลลิเมตร', variety_id: 12},
+      { characteristic: 'คุณภาพข้าวสุก เหนียวนุ่ม', variety_id: 12},
+      { characteristic: 'สูงประมาณ 165 เซนติเมตร', variety_id: 13},
+      { characteristic: 'ไวต่อช่วงแสง', variety_id: 13},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณปลายเดือนมกราคมถึงปลายเดือนกุมภาพันธ์', variety_id: 13},
+      { characteristic: 'ลักษณะทรงกอแบะ ต้นแข็ง ใบสีเขียว ใบธงเอน รวงยาวมาก ระแง้ถี่', variety_id: 13},
+      { characteristic: 'เมล็ดข้าวเปลือกสีฟาง', variety_id: 13},
+      { characteristic: 'ระยะพักตัว ประมาณ 5-6 สัปดาห์', variety_id: 13},
+      { characteristic: 'เมล็ดข้าวเปลือกยาว x กว้าง x หนา =10.3 x 2.6 x1.9 มิลลิเมตร', variety_id: 13},
+      { characteristic: 'เมล็ดข้าวกล้อง ยาว x กว้าง x หนา = 7.06 x 2.16 x 1.58 มิลลิเมตร', variety_id: 13},
+      { characteristic: 'ปริมาณอมิโลส 30-31%', variety_id: 13},
+      { characteristic: 'คุณภาพข้าวสุก ร่วน', variety_id: 13},
+      { characteristic: 'สูงประมาณ 160 เซนติเมตร', variety_id: 14},
+      { characteristic: 'ไวต่อช่วงแสง', variety_id: 14},
+      { characteristic: 'ลำต้นตั้งตรง สีเขียว ใบธงตก ชูรวงอยู่เหนือใบ ระแง้ถี่', variety_id: 14},
+      { characteristic: 'อายุเก็บเกี่ยวประมาณ 26 กุมภาพันธ์', variety_id: 14},
+      { characteristic: 'เมล็ดข้าวเปลือกสีน้ำตาล', variety_id: 14},
+      { characteristic: 'ท้องไข่ปานกลาง', variety_id: 14},
+      { characteristic: 'ระยะพักตัวของเมล็ดประมาณ 3 สัปดาห์', variety_id: 14},
+      { characteristic: 'เมล็ดข้าวกล้อง กว้าง x ยาว x หนา =6.9 x 2.2 x 1.7 มิลลิเมตร', variety_id: 14},
+      { characteristic: 'เมล็ดข้าวเปลือก ยาว x กว้าง x หนา = 9.3 x 2.5 x 1.8 มิลลิเมตร', variety_id: 14},
+      { characteristic: 'ปริมาณอมิโลส 30-33 %', variety_id: 14},
+      { characteristic: 'คุณภาพข้าวสุก ร่วนค่อนข้างแข็ง', variety_id: 14},
+      //{ characteristic: 'เมล็ดร่วงยาก', variety_id: 14},
+    ])  
+  }
+  
+}
+
+export async function seedStrength() {
+  const { data, error } = await supabase.from('Strengths').select('id').limit(1)
+
+  if (error) {
+    console.error('❌ Error checking Strengths :', error)
+    return
+  }
+
+  if (data.length == 0) {
+    await supabase.from('Strengths').insert([
+      { strength: 'ผลผลิตสูง', variety_id: 1},
+      { strength: 'คุณภาพเมล็ดดี', variety_id: 1},
+      { strength: 'คุณภาพการสีดี', variety_id: 1},
+      { strength: 'ตอบสนองต่อปุ๋ยสูง', variety_id: 1},
+      { strength: 'ต้านทานโรคใบสีส้ม และโรคไหม้', variety_id: 1},
+      { strength: 'ต้านทานเพลี้ยกระโดดสีน้ำตาล เพลี้ยจักจั่นสีเขียว', variety_id: 1},
+      { strength: 'ต้านทานโรคไหม้ โรคขอบใบแห้ง และต้านทานโรคใบหงิก และโรคใบสีส้ม ในสภาพธรรมชาติ', variety_id: 2},
+      { strength: 'ต้านทานเพลี้ยกระโดดสีน้ำตาล และเพลี้ยจักจั่นสีเขียว', variety_id: 2},
+      { strength: 'ผลผลิตสูง', variety_id: 3},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ย', variety_id: 3},
+      { strength: 'ต้านทานโรคไหม้ โรคขอบใบแห้ง และต้านทานโรคใบหงิก และโรคใบสีส้ม ในสภาพธรรมชาติ', variety_id: 3},
+      { strength: 'ต้านทานเพลี้ยกระโดดสีน้ำตาล และเพลี้ยกระโดดหลังขาว', variety_id: 3},
+      { strength: 'อายุเก็บเกี่ยวสั้น', variety_id: 4},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ยดี', variety_id: 4},
+      { strength: 'คุณภาพการสีดี', variety_id: 4},
+      { strength: 'ต้านทานโรคไหม้ และโรคขอบใบแห้ง ทนทานต่อโรคใบหงิก และ โรคใบสีส้ม ในสภาพธรรมชาติ', variety_id: 4},
+      { strength: 'ต้านทานเพลี้ยกระโดดสีน้ำตาล', variety_id: 4},
+      { strength: 'แตกกอดี ต้นแข็ง ไม่ล้มง่าย', variety_id: 5},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ยดี', variety_id: 5},
+      { strength: 'คอรวงยาว นวดง่าย เป็นที่นิยมของชาวนาภาคใต้ที่เกี่ยวข้าวด้วยแกระ', variety_id: 5},
+      { strength: 'ทนดินเปรี้ยวได้พอควร', variety_id: 5},
+      { strength: 'ต้านทานต่อโรคขอบใบแห้งดี และต้านทานโรคใบสีส้มปานกลาง', variety_id: 5},
+      { strength: 'ให้ผลผลิตสูง', variety_id: 6},
+      { strength: 'แตกกอดี', variety_id: 6},
+      { strength: 'ต้านทานโรคขอบใบแห้ง โรคใบหงิก', variety_id: 6},
+      { strength: 'เป็นพันธุ์ที่เหมาะสําหรับปลูกในเขตชลประทานคุณภาพการสีดี', variety_id: 7},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ยในระดับสูง', variety_id: 7},
+      { strength: 'แตกกอดี ลําต้นแข็งไม่ล้มง่าย', variety_id: 7},
+      { strength: 'ข้าวกล้องใส แกร่ง คุณภาพการสีดี', variety_id: 7},
+      { strength: 'ค่อนข้างต้านทานโรคใบจุดสีนํ้าตาล', variety_id: 7},
+      { strength: 'เจริญเติบโตได้ดีในท้องที่ที่มีความอุดมสมบูรณ์ของดินตํ่า เมื่อเทียบกับพันธุ์ กข อื่นๆ', variety_id: 8},
+      { strength: 'ต้นแข็งไม่ล้มง่าย', variety_id: 8},
+      { strength: 'มีรวงซ่อนใต้ใบธง ป้องกันการทําลายของนกได้ดี', variety_id: 8},
+      { strength: 'ต้านทานเพลี้ยจักจั่นสีเขียว', variety_id: 8},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ยสูง', variety_id: 8},
+      { strength: 'เมล็ดร่วงง่าย', variety_id: 9},
+      { strength: 'การเจริญเติบโตและออกรวงสม่ำเสมอ', variety_id: 9},
+      { strength: 'ไม่ต้านทานโรคขอบใบแห้ง โรคไหม้ และโรคเมล็ดด่าง', variety_id: 9},
+      { strength: 'ไม่ต้านทานโรคเมล็ดด่าง', variety_id: 9},
+      { strength: 'เมล็ดขาวเรียวยาว จัดเป็นข้าว 100 % ชั้นหนึ่ง', variety_id: 10},
+      { strength: 'ตอบสนองต่อการใช้ปุ๋ยดี', variety_id: 10},
+      { strength: 'ต้นแข็งไม่ล้มง่าย', variety_id: 10},
+      { strength: 'เมล็ดข้าวเปลือกมีน้ำหนักต่อถังดี', variety_id: 10},
+      { strength: 'คุณภาพการสีดี ได้เมล็ดข้าวสารใส แกร่ง', variety_id: 10},
+      { strength: 'ต้านทานโรคคอรวงเน่า โรคไหม้ และโรคใบจุดสีน้ำตาล', variety_id: 10},
+      { strength: 'ให้ผลผลิตสูง ทั้งในสภาพที่มีและไม่มีโรคใบหงิกระบาด', variety_id: 11},
+      { strength: 'คุณภาพการสีดี ข้าวสารสวย', variety_id: 11},
+      { strength: 'ต้านทานโรคใบหงิก โรคขอบใบแห้ง', variety_id: 11},
+      { strength: 'ต้านทานเพลี้ยกระโดสีน้ำตาล', variety_id: 11},
+      { strength: 'ต้านทานโรคไหม้', variety_id: 12},
+      { strength: 'ค่อนข้างต้านทานโรคใบจุดสีนําตาล', variety_id: 12},
+      { strength: 'เป็นข้าวต้นสูง อายุเบา เหมาะกับสภาพทีดอนทีน้ำหมดเร็ว', variety_id: 12},
+      { strength: 'ค่อนข้างต้านทานโรคใบหงิก โรคใบขีดสีน้ำตาล และเพลี้ยจักจั่นสีเขียว', variety_id: 13},
+      { strength: 'ให้ผลผลิตสูงกว่าพันธุ์นางพญา 132 ประมาณ 17 %', variety_id: 14},
+      { strength: 'ลักษณะรวงยาว และใหญ่ มีเมล็ดต่อรวงมาก สะดวกต่อการเก็บเกี่ยวด้วยแกระ', variety_id: 14},
+      { strength: 'นวดง่ายกว่าพันธุ์นางพญา 132', variety_id: 14},
+      { strength: 'ระบบรากดี มีความสามารถทนแล้งพอสมควร', variety_id: 14},
+      { strength: 'มีความต้านทานต่อสภาพน้ำลึก', variety_id: 14},
+      { strength: 'ต้านทานโรคไหม้', variety_id: 14},
+      //{ strength: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+    ])  
+  }
+  
+}
+
+export async function seedWeaknesse() {
+  const { data, error } = await supabase.from('Weaknesses').select('id').limit(1)
+
+  if (error) {
+    console.error('❌ Error checking Weaknesses :', error)
+    return
+  }
+
+  if (data.length == 0) {
+    await supabase.from('Weaknesses').insert([
+      { weaknesse: 'ไม่ต้านทานโรคใบจุดสีน้ำตาล และโรคกาบใบแห้ง', variety_id: 1},
+      { weaknesse: 'พบโรคใบขีดสีน้ำตาลในระยะข้าวออกรวง', variety_id: 2},
+      { weaknesse: 'ออกรวงไม่สม่ำเสมอ', variety_id: 2},
+      { weaknesse: 'ไม่ควรใช้ปุ๋ยไนโตรเจนเกินอัตรา 12 กิโลกรัมไนโตรเจนต่อไร่ เพราะจะทำให้ต้นข้าว อ่อนแอต่อการเข้าทำลายของโรคและแมลง', variety_id: 2},
+      { weaknesse: 'พบโรคใบขีดสีน้ำตาลในระยะออกรวง อาจเป็นสาเหตุของโรคเมล็ดด่างได้', variety_id: 3},
+      { weaknesse: 'ไม่ต้านทานโรคใบขีดสีน้ำตาลระยะออกรวง และโรคกาบใบเน่า ใน สภาพธรรมชาติ', variety_id: 4},
+      { weaknesse: 'ไม่ทนทานอากาศหนาว ถ้าปลูกในฤดูนาปรังของภาคเหนือ และภาคตะวันออกเฉียงเหนือบางท้องที่ จะทำให้เมล็ดลีบมากและผลผลิตค่อนข้างต่ำ', variety_id: 5},
+      { weaknesse: 'ข้าวแตกกอมาก มีลูกข้าวมาก จึงทำให้ข้าวออกดอกไม่สม่ำเสมอ', variety_id: 5},
+      { weaknesse: 'ข้าวร่วงง่าย ทำให้ต้องระมัดระวังในการเก็บเกี่ยวมากขึ้น', variety_id: 5},
+      { weaknesse: 'ไม่ต้านทานต่อโรคไหม้ โรคใบหงิก', variety_id: 5},
+      { weaknesse: 'ไม่ต้านทานเพลี้ยกระโดดสีน้ำตาล เพลี้ยจักจั่นสีเขียว และแมลงบั่ว', variety_id: 5},
+      { weaknesse: 'ไม่ต้านทานโรคใบสีส้ม และโรคไหม้', variety_id: 6},
+      { weaknesse: 'ไม่ต้านทานโรคขอบใบแห้ง โรคใบหงิก โรคใบขีดสีนํ้าตาล โรคใบสีส้ม และโรคไหม', variety_id: 7},
+      { weaknesse: 'ไม่ต้านทานเพลี้ยกระโดดสีนํ้าตาล เพลี้ยจักจั่นสีเขียวหนอนกอ และแมลงบั่ว', variety_id: 7},
+      { weaknesse: 'ไม่ต้านทานโรคใบหงิก โรคคอรวงเน่า และโรคใบจุดสีนํ้าตาล', variety_id: 7},
+      { weaknesse: 'ไม่ต้านทานโรคไหม้ โรคขอบใบแห้ง โรคใบหงิก และโรคใบจุดสีนํ้าตาล', variety_id: 8},
+      { weaknesse: 'ไม่ต้านทานเพลี้ยกระโดดสีนํ้าตาล หนอนกอ และแมลงบั่ว', variety_id: 8},
+      { weaknesse: 'เมล็ดร่วงง่าย', variety_id: 9},
+      { weaknesse: 'ไม่ต้านทานโรคขอบใบแห้ง โรคไหม้ และโรคเมล็ดด่าง', variety_id: 9},
+      { weaknesse: 'ไม่ต้านทานโรคเมล็ดด่าง', variety_id: 9},
+      { weaknesse: 'ไม่ต้านทานโรคขอบใบแห้ง โรคใบสีส้ม โรคใบขีดโปร่งแสง โรคใบขีดสีน้ำตาล และโรคใบหงิก', variety_id: 10},
+      { weaknesse: 'ไม่ต้านทานเพลี้ยกระโดดสีน้ำตาล เพลี้ยจักจั่นสีเขียว หนอนกอ และแมลงบั่ว', variety_id: 10},
+      { weaknesse: 'ถ้าใช้อัตราปุ๋ยสูง ต้นข้าวจะล้ม', variety_id: 11},
+      { weaknesse: 'ไม่ต้านทานโรคใบสีส้ม โรคกาบใบแห้ง โรคไหม้', variety_id: 11},
+      { weaknesse: 'ไม่ต้านทานหนอนกอ', variety_id: 11},
+      { weaknesse: 'ไม่ต้านทานโรคขอบใบแห้ง โรคใบสีส้ม', variety_id: 12},
+      { weaknesse: 'ไม่ต้านทานเพลียกระโดดสีนําตาล และแมลงบัว', variety_id: 12},
+      { weaknesse: 'ไม่ต้านทานโรคไหม้ และเพลี้ยกระโดดสีน้ำตาล', variety_id: 13},
+      { weaknesse: 'ไม่ต้านทานโรคขอบใบแห้ง', variety_id: 14},
+      //{ weaknesse: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+      //{ weaknesse: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+      //{ weaknesse: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+      //{ weaknesse: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+      //{ weaknesse: 'โรคใบจุดสีน้ำตาล', variety_id: 14},
+    ])  
+  }
+  
+}

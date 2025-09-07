@@ -9,8 +9,9 @@ import roleRoutes from './routes/roles';
 import uploadRoutes from './routes/upload';
 import diseaseRoutes from './routes/disease';
 import statisticRoutes from './routes/statistics';
+import ricevarietyRoutes from './routes/ricevariety';
 
-import { seedRoles, seedDiseaseInformations, seedDeficiencySolutions, seedUsers, seedRegions, seedProvinces } from './seed';
+import { seedRoles, seedDiseaseInformations, seedDeficiencySolutions, seedUsers, seedRegions, seedProvinces, seedRiceVariety, seedMorphology, seedStrength, seedWeaknesse } from './seed';
 import { saveAnalysisResult } from './controllers/analysisController';
 import { getStatisticsAll, updateDiseaseStatistic } from './controllers/statisticsController';
 
@@ -50,6 +51,7 @@ app.use('/roles', roleRoutes);
 app.use('/uploads', uploadRoutes);
 app.use('/disease', diseaseRoutes);
 app.use('/Statistic', statisticRoutes)
+app.use('/RiceVariety', ricevarietyRoutes)
 
 //เริ่มต้น server
 async function startServer() {
@@ -74,6 +76,10 @@ async function startServer() {
   await seedUsers();
   await seedRegions();
   await seedProvinces();
+  await seedRiceVariety();
+  await seedMorphology();
+  await seedStrength();
+  await seedWeaknesse();
 
   if (require.main === module) {
     app.listen(PORT, HOST, () => {
