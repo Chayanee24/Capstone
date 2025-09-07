@@ -82,7 +82,11 @@ const getUsers = async (req, res) => {
             return;
         }
         // รวมข้อมูล
-        const result = Object.assign(Object.assign({}, user), { profile: profileData || null });
+        const result = {
+            ...user,
+            profile: profileData || null,
+            //role: profileData?.Roles || null,
+        };
         res.json({ data: result });
     }
     catch (err) {
