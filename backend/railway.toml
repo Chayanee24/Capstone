@@ -1,2 +1,6 @@
-[env]
-NPM_CONFIG_PRODUCTION = "false"
+[build]
+builder = "NIXPACKS"
+buildCommand = "echo 'skip build step'"
+
+[start]
+command = "npm start"
