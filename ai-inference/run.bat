@@ -1,3 +1,3 @@
 @echo off
-uvicorn main:app --reload --port 8000
+uvicorn main:app --host 0.0.0.0
 pause

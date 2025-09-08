@@ -5,20 +5,35 @@ import tensorflow as tf
 from PIL import Image
 import requests
 from io import BytesIO
+import os
 
 app = FastAPI()
 
 class ImageRequest(BaseModel):
     url: str
 
+# 🔹 Base path ของไฟล์ main.py
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 🔹 Path ของโมเดลและ labels
+MODEL_PATH = os.path.join(BASE_DIR, "models", "rice_disease_model9-types-all.tflite")
+LABEL_PATH = os.path.join(BASE_DIR, "models", "labels-4.txt")
+
+print("📂 Looking for model at:", MODEL_PATH)
+print("📂 Looking for labels at:", LABEL_PATH)
+
 # 🔹 โหลด TFLite model
-interpreter = tf.lite.Interpreter(
-    model_path= "./ai-inference/models/rice_disease_model9-types-all.tflite"
-)
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model not found at {MODEL_PATH}")
+
+interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt
-with open("./ai-inference/models/labels-4.txt", "r", encoding="utf-8-sig") as f:
+if not os.path.exists(LABEL_PATH):
+    raise FileNotFoundError(f"Labels file not found at {LABEL_PATH}")
+
+with open(LABEL_PATH, "r", encoding="utf-8-sig") as f:
     label_map = [line.strip() for line in f.readlines()]
 
 # 🔹 ดึง input/output tensor
