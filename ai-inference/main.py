@@ -1,11 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException 
 from pydantic import BaseModel
 import numpy as np
-import tensorflow as tf
 from PIL import Image
 import requests
 from io import BytesIO
 import os
+
+from ai_edge_litert.interpreter import Interpreter
 
 app = FastAPI()
 
@@ -22,11 +23,11 @@ LABEL_PATH = os.path.join(BASE_DIR, "models", "labels-4.txt")
 print("📂 Looking for model at:", MODEL_PATH)
 print("📂 Looking for labels at:", LABEL_PATH)
 
-# 🔹 โหลด TFLite model
+# 🔹 โหลด LiteRT model
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model not found at {MODEL_PATH}")
 
-interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
+interpreter = Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt

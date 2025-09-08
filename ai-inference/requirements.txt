@@ -1,6 +1,6 @@
 fastapi
-uvicorn
-tensorflow
+uvicorn[standard]
+ai-edge-litert
 numpy
 pillow
 requests
