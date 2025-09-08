@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react"; // ✅ ตัด React ออก
 import {
   GoogleMap,
   Marker,
@@ -21,7 +21,7 @@ type DiseaseReport = {
   province: string;
   region: string;
   disease_name: string;
-  severity: number; // แปลงเป็นตัวเลขสำหรับ PieChart
+  severity: number;
   latitude: number;
   longitude: number;
   image_path: string;
@@ -41,7 +41,6 @@ export default function Report() {
   const [selectedValue, setSelectedValue] = useState<string>("ทั้งหมด");
   const [selectedReport, setSelectedReport] = useState<DiseaseReport | null>(null);
 
-  // Fetch backend
   useEffect(() => {
     const fetchReports = async () => {
       try {
@@ -54,10 +53,7 @@ export default function Report() {
             const provName = item.Provinces.province_name;
             const regionName = item.Provinces.Region.region_name || "ไม่ระบุ";
             const coords = ar.RiceImages
-              ? {
-                  lat: ar.RiceImages.latitude,
-                  lng: ar.RiceImages.longitude,
-                }
+              ? { lat: ar.RiceImages.latitude, lng: ar.RiceImages.longitude }
               : { lat: 15.0, lng: 100.0 };
 
             return {
@@ -65,7 +61,7 @@ export default function Report() {
               province: provName,
               region: regionName,
               disease_name: ar.predicted_deficiency,
-              severity: item.total_case || 1, // เป็น number สำหรับ PieChart
+              severity: item.total_case || 1,
               latitude: coords.lat,
               longitude: coords.lng,
               image_path: ar.RiceImages?.image_path || "",
@@ -93,12 +89,11 @@ export default function Report() {
 
   const filteredReports = useMemo(() => {
     if (selectedValue === "ทั้งหมด") return reports;
-    return reports.filter(
-      (r) => (filterType === "region" ? r.region === selectedValue : r.province === selectedValue)
+    return reports.filter((r) =>
+      filterType === "region" ? r.region === selectedValue : r.province === selectedValue
     );
   }, [filterType, selectedValue, reports]);
 
-  // PieChart data แยกตาม disease + severity
   const chartData = useMemo(() => {
     const countByDisease: Record<string, number> = {};
     filteredReports.forEach((r) => {
@@ -115,14 +110,12 @@ export default function Report() {
 
   return (
     <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center space-y-8">
-      {/* Header */}
       <Zoom>
         <h1 className="text-4xl md:text-5xl font-extrabold text-green-400">
           สถิติโรคข้าว 📊
         </h1>
       </Zoom>
 
-      {/* Filter */}
       <Slide direction="up" cascade damping={0.2}>
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <select
@@ -149,7 +142,6 @@ export default function Report() {
         </div>
       </Slide>
 
-      {/* Pie Chart */}
       <div className="w-full h-80 bg-zinc-800 rounded-2xl shadow-lg p-6">
         <ResponsiveContainer>
           <PieChart>
@@ -160,7 +152,6 @@ export default function Report() {
               labelLine={false}
               outerRadius={100}
               dataKey="value"
-              // label={(entry) => entry.name}
             >
               {chartData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -172,7 +163,6 @@ export default function Report() {
         </ResponsiveContainer>
       </div>
 
-      {/* Map */}
       <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-lg border border-green-700">
         {isLoaded ? (
           <GoogleMap

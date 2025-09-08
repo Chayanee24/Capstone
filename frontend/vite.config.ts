@@ -12,7 +12,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://capstone-production-7bf8.up.railway.app',
         changeOrigin: true,
       },
     },

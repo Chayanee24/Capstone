@@ -1,29 +1,27 @@
 import { Text } from "../atoms/Text"
 import { Card } from "../molecules/Card"
 import { VarietyTexts } from "../particles/Data"
-//import Image1 from "../../assets/gym/6.jpeg";
-//import Image2 from "../../assets/gym/11.jpeg"
-//import Image3 from "../../assets/gym/12.jpeg"
+import Image1 from "../../assets/gym/6.jpeg";
+import Image2 from "../../assets/gym/11.jpeg";
+import Image3 from "../../assets/gym/12.jpeg";
 import { useCallback } from "react";
 import { Image } from "../atoms/Image";
 import { Link } from "react-router-dom";
-//import { ChatsCircle, Clock } from "@phosphor-icons/react";
-
+import { Clock } from "lucide-react"; // ✅ import clock icon
 
 const Blogs = () => {
-
     const renderImage = useCallback((element: number) => {
         switch (element) {
             case 0:
-                return Image;
+                return Image1;
             case 1:
-                return Image;
+                return Image2;
             case 2:
-                return Image;
+                return Image3;
             default:
                 return "";
         }
-    }, [])
+    }, []);
 
     return (
         <section className="w-full h-auto flex items-center bg-zinc-900">
@@ -37,39 +35,34 @@ const Blogs = () => {
 
                 {/* Blog News */}
                 <div className="w-full lg:w-3/4 grid md:grid-cols-3 lg:gap-8 md:gap-5 gap-8 px-6 md:px-4 lg:px-0">
-                    {
-                        VarietyTexts.riceVarieties.map((blog, index) => (
-                            <Card key={index} className="flex flex-col justify-between bg-zinc-950 border-b-4 border-red-500">
-                                <Image alt={blog.title} className="w-full h-48" objectCover="object-cover" image={renderImage(index)} />
-                                <Link to="/" className="flex flex-col lg:p-6 md:p-4 p-6 gap-2 group">
-                                    <Text as="h3" className="text-amber-500 text-xs group-hover:underline font-semibold uppercase">{blog.caption}</Text>
-                                    <Text as="h1" className="text-zinc-300 group-hover:underline text-base capitalize">{blog.title}</Text>
-                                    <Text as="p" className="text-zinc-400 text-sm">{blog.paragraph.slice(0, 155) + '...'}</Text>
-
-                                </Link>
-                                <div className="flex justify-between lg:px-6 md:px-4 px-6 pb-6 items-center">
-                                    <aside className="flex items-center gap-2">
-                                        <Text as="span" className="text-zinc-400 text-xs flex items-center gap-1 border-r border-zinc-400 pr-2">
-                                            <Clock size={15} color="currentColor" />
-                                            {blog.region}
-                                        </Text>
-                                        <Text as="span" className="text-zinc-300 capitalize text-xs">
-                                            {blog.features}
-                                        </Text>
-                                    </aside>
-                                    {/* <Text as="span" className="text-zinc-400 text-xs flex items-center gap-0.5">
-                                        <ChatsCircle size={15} color="currentColor" />
-                                        {blog.comments}
-                                    </Text> */}
-                                </div>
-                            </Card>
-                        ))
-                    }
-
+                    {VarietyTexts.riceVarieties.map((blog, index) => (
+                        <Card key={index} className="flex flex-col justify-between bg-zinc-950 border-b-4 border-red-500">
+                            <Image
+                                alt={blog.title}
+                                className="w-full h-48"
+                                objectCover="object-cover"
+                                image={renderImage(index)} // ✅ ตอนนี้ return เป็น path string ของรูป
+                            />
+                            <Link to="/" className="flex flex-col lg:p-6 md:p-4 p-6 gap-2 group">
+                                <Text as="h3" className="text-amber-500 text-xs group-hover:underline font-semibold uppercase">{blog.caption}</Text>
+                                <Text as="h1" className="text-zinc-300 group-hover:underline text-base capitalize">{blog.title}</Text>
+                                <Text as="p" className="text-zinc-400 text-sm">{blog.paragraph.slice(0, 155) + "..."}</Text>
+                            </Link>
+                            <div className="flex justify-between lg:px-6 md:px-4 px-6 pb-6 items-center">
+                                <aside className="flex items-center gap-2">
+                                    <Text as="span" className="text-zinc-400 text-xs flex items-center gap-1 border-r border-zinc-400 pr-2">
+                                        <Clock size={15} color="currentColor" /> {/* ✅ ใช้งานได้แล้ว */}
+                                        {blog.region}
+                                    </Text>
+                                    <Text as="span" className="text-zinc-300 capitalize text-xs">
+                                        {blog.features}
+                                    </Text>
+                                </aside>
+                            </div>
+                        </Card>
+                    ))}
                 </div>
-
             </main>
-
         </section>
     )
 }

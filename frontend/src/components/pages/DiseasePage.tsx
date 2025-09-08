@@ -110,6 +110,11 @@ const DiseasePage = () => {
         </p>
       </Slide>
 
+      {/* แสดงข้อความโหลดข้อมูล */}
+      {loadingList && (
+        <p className="text-green-400 mb-4">กำลังโหลดรายชื่อโรค...</p>
+      )}
+
       {/* ช่องค้นหา + Suggestion */}
       <div className="w-full max-w-md mb-6 relative">
         <div className="flex gap-2">
