@@ -13,12 +13,12 @@ class ImageRequest(BaseModel):
 
 # 🔹 โหลด TFLite model
 interpreter = tf.lite.Interpreter(
-    model_path= "./ai-inference/rice_disease_model9-types-all.tflite"
+    model_path= "./ai-inference/models/rice_disease_model9-types-all.tflite"
 )
 interpreter.allocate_tensors()
 
 # 🔹 โหลด labels.txt
-with open("./ai-inference/labels-4.txt", "r", encoding="utf-8-sig") as f:
+with open("./ai-inference/models/labels-4.txt", "r", encoding="utf-8-sig") as f:
     label_map = [line.strip() for line in f.readlines()]
 
 # 🔹 ดึง input/output tensor
