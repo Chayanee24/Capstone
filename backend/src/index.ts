@@ -25,7 +25,7 @@ const HOST = process.env.HOST || "0.0.0.0";
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://barcelona-galaxy-liberty-per.trycloudflare.com"
+    "https://web-app-rice.vercel.app"
   ],
   credentials: true
 }));

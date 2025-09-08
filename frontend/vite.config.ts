@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: [
-      'barcelona-galaxy-liberty-per.trycloudflare.com',
+      'web-app-rice.vercel.app',
     ],
     port: 5173,
     proxy: {
