@@ -9,7 +9,7 @@ export default defineConfig({
     allowedHosts: [
       'barcelona-galaxy-liberty-per.trycloudflare.com',
     ],
-    port: 5173, // ✅ เปลี่ยนกลับมาใช้ 5173
+    port: 5173,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
