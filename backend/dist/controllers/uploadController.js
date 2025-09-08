@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadImageAndAnalyze = void 0;
 const axios_1 = __importDefault(require("axios"));
 const supabase_1 = __importDefault(require("../services/supabase"));
+const API_AI = process.env.API_AI;
 const uploadImageAndAnalyze = async (req, res, next) => {
     var _a;
     try {
@@ -33,7 +34,7 @@ const uploadImageAndAnalyze = async (req, res, next) => {
         const { data } = supabase_1.default.storage.from("up-loads").getPublicUrl(filePath);
         const imageUrl = data.publicUrl;
         // ✅ เรียก AI วิเคราะห์
-        const aiResponse = await axios_1.default.post("http://localhost:8000/uploads/analyze", {
+        const aiResponse = await axios_1.default.post(`${API_AI}/uploads/analyze`, {
             url: imageUrl,
         });
         // ✅ insert ลง RiceImages

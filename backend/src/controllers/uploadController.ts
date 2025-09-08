@@ -3,6 +3,8 @@ import { RequestHandler } from "express"
 import axios from "axios"
 import supabase from "../services/supabase"
 
+const API_AI = process.env.API_AI
+
 export const uploadImageAndAnalyze: RequestHandler = async (req, res, next) => {
   try {
     const file = req.file
@@ -35,7 +37,7 @@ export const uploadImageAndAnalyze: RequestHandler = async (req, res, next) => {
     const imageUrl = data.publicUrl
 
     // ✅ เรียก AI วิเคราะห์
-    const aiResponse = await axios.post("http://localhost:8000/uploads/analyze", {
+    const aiResponse = await axios.post(`${API_AI}/uploads/analyze`, {
       url: imageUrl,
     })
 
