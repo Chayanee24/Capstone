@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import MainLayout from "../atoms/MainLayout";
+import { API_URL } from "../../config/api";
 
 interface Morphology {
   characteristic: string;
@@ -35,7 +36,7 @@ const VarietyPage = () => {
     const fetchVarieties = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:3000/ricevariety");
+        const res = await fetch(`${API_URL}/RiceVariety`);
         if (!res.ok) throw new Error("โหลดข้อมูลไม่สำเร็จ");
         const json = await res.json();
         setVarieties(json.data);
