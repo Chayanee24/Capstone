@@ -13,7 +13,7 @@ import { AuthProvider, useAuth } from "./components/context/AuthContext";
 import SplashScreen from "./components/organs/SplashScreen";
 import BottomNav from "./components/organs/BottomNav";
 import Profile from "./components/pages/Profile"
-import MainLayout from "./components/atoms/MainLayout";
+
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
@@ -27,7 +27,7 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 2000); 
+    const timer = setTimeout(() => setShowSplash(false), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -38,29 +38,31 @@ function App() {
 
   // ซ่อน NavBar ถ้าอยู่ที่ / หรือ /register
   // const hideNavBar = location.pathname === "/" || location.pathname === "/register" || showSplash;
-  const hideBottom = location.pathname === "/" || location.pathname === "/register" || showSplash ;
+  const hideBottom = location.pathname === "/" || location.pathname === "/register" || showSplash;
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
       {/* {!hideNavBar && <NavBar />} */}
       <AuthProvider>
-      <Routes>
-        {showSplash ? (
+        <Routes>
+          {showSplash ? (
             <Route path="*" element={<SplashScreen />} />
           ) : (
             <>
-            <Route path="/" element={<Login />} />
-            <Route path="/diagnosis" element={<Diagnosis />} />
-            <Route path="/diseases" element={<DiseasePage />} />
-            <Route path="/varieties" element={<VarietyPage />} />
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/report" element={<Report />} />
-            <Route path="/profile" element={<Profile />} />
-          </>
-        )}
-      </Routes>
-      {!hideBottom && <BottomNav />}
+              <Route path="/" element={<Login />} />
+              <Route path="/diagnosis" element={<Diagnosis />} />
+              <Route path="/diseases" element={<DiseasePage />} />
+              <Route path="/varieties" element={<VarietyPage />} />
+              <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/report" element={<Report />} />
+              <Route path="/disease-info" element={<DiseasePage />} />
+              <Route path="/riceVariety-info" element={<VarietyPage />} />
+              <Route path="/profile" element={<Profile />} />
+            </>
+          )}
+        </Routes>
+        {!hideBottom && <BottomNav />}
       </AuthProvider>
     </div>
   );
