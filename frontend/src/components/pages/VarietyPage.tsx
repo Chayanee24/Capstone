@@ -1,84 +1,141 @@
-import { useState } from "react";
-import { Slide, Zoom } from "react-awesome-reveal";
+// src/pages/VarietyPage.tsx
+import { useEffect, useState } from "react";
+import { Slide } from "react-awesome-reveal";
+import MainLayout from "../atoms/MainLayout";
+
+interface Morphology {
+  characteristic: string;
+}
+interface Strength {
+  strength: string;
+}
+interface Weakness {
+  weaknesse: string;
+}
 
 interface RiceVariety {
-  name: string;
-  region: string;
-  features: string;
+  id: number;
+  name_th: string;
+  name_en: string;
+  type: string;
+  recommended_area: string;
+  average_yield: string;
+  Morphology: Morphology[];
+  Strengths: Strength[];
+  Weaknesses: Weakness[];
 }
 
 const VarietyPage = () => {
-  const [query, setQuery] = useState("");
-  const [result, setResult] = useState<RiceVariety | null>(null);
+  const [varieties, setVarieties] = useState<RiceVariety[]>([]);
+  const [selected, setSelected] = useState<RiceVariety | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const searchVariety = async () => {
-    if (!query.trim()) return;
-    setLoading(true);
-    setError("");
-    setResult(null);
-
-    try {
-      const response = await fetch(
-        `https://your-backend.com/api/variety/${encodeURIComponent(query)}`
-      );
-      if (!response.ok) throw new Error("ไม่พบข้อมูลพันธุ์ข้าว");
-
-      const data: RiceVariety = await response.json();
-      setResult(data);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || "เกิดข้อผิดพลาด");
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchVarieties = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("http://localhost:3000/ricevariety");
+        if (!res.ok) throw new Error("โหลดข้อมูลไม่สำเร็จ");
+        const json = await res.json();
+        setVarieties(json.data);
+      } catch (err: any) {
+        setError(err.message || "เกิดข้อผิดพลาด");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchVarieties();
+  }, []);
 
   return (
-    <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
-      <Zoom>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-4">
-          ค้นหาพันธุ์ข้าว 🌾
-        </h1>
-      </Zoom>
-      <Slide direction="up">
-        <p className="text-zinc-300 mb-6 text-center max-w-2xl">
-          พิมพ์ชื่อพันธุ์ข้าวที่ต้องการค้นหา ระบบจะแสดงข้อมูลภูมิประเทศและลักษณะเด่นของพันธุ์นั้น
-        </p>
-      </Slide>
+    <MainLayout>
+      <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
+        {!selected && (
+          <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-4">
+            แนะนำพันธุ์ข้าว 🌾
+          </h1>
+        )}
+        {!selected && (
+          <p className="mb-6 text-center text-zinc-300 max-w-2xl">
+            คลิกชื่อพันธุ์ข้าวเพื่อดูรายละเอียด
+          </p>
+        )}
+        {/* Loading & Error */}
+        {loading}
+        {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      {/* ช่องค้นหา */}
-      <div className="flex w-full max-w-md gap-2 mb-6">
-        <input
-          type="text"
-          placeholder="กรอกชื่อพันธุ์ข้าว..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="flex-1 p-3 rounded-lg text-black focus:outline-none"
-        />
-        <button
-          onClick={searchVariety}
-          disabled={loading || !query.trim()}
-          className="bg-green-400 px-6 py-3 rounded-lg hover:bg-green-500 transition-colors disabled:opacity-50"
-        >
-          {loading ? "กำลังค้นหา..." : "ค้นหา"}
-        </button>
-      </div>
-
-      {/* แสดงผลลัพธ์ */}
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-
-      {result && (
-        <Slide direction="up">
-          <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-2">{result.name}</h2>
-            <p className="mb-2"><strong>ภูมิประเทศ:</strong> {result.region}</p>
-            <p><strong>ลักษณะเด่น:</strong> {result.features}</p>
+        {/* รายการพันธุ์ข้าว (ซ่อนเมื่อมี selected) */}
+        {!selected && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md sm:max-w-lg md:max-w-2xl">
+            {varieties.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setSelected(item)}
+                className="w-full bg-green-400 text-black py-3 rounded-lg font-semibold hover:bg-green-500 transition-colors"
+              >
+                {item.name_th}
+              </button>
+            ))}
           </div>
-        </Slide>
-      )}
-    </div>
+        )}
+
+        {/* แสดงรายละเอียดพันธุ์ข้าว */}
+        {selected && (
+          <Slide direction="up">
+            <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md sm:max-w-lg md:max-w-2xl backdrop-blur-md border border-green-700">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-300 mb-4 drop-shadow-md text-center">
+                {selected.name_th}
+              </h2>
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-green-200 mb-4 drop-shadow-md text-center">
+                ({selected.name_en})
+              </h2>
+
+              <p className="mb-2"><strong>ประเภท:</strong> {selected.type}</p>
+              <p className="mb-2"><strong>ภูมิภาคแนะนำ:</strong> {selected.recommended_area}</p>
+              <p className="mb-4"><strong>ผลผลิตเฉลี่ย:</strong> {selected.average_yield}</p>
+
+              <div className="mb-4">
+                <strong className="block mb-1 font-bold text-yellow-200">ลักษณะทางสัณฐาน:</strong>
+                <ul className="list-disc list-inside text-green-100/80 space-y-1">
+                  {selected.Morphology.map((m, idx) => (
+                    <li key={idx}>{m.characteristic}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <strong className="block mb-1 font-bold text-green-400">จุดเด่น:</strong>
+                <ul className="list-disc list-inside text-green-100/80 space-y-1">
+                  {selected.Strengths.map((s, idx) => (
+                    <li key={idx}>{s.strength}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-6">
+                <strong className="block mb-1 font-bold text-red-400">ข้อจำกัด:</strong>
+                <ul className="list-disc list-inside text-green-100/80 space-y-1">
+                  {selected.Weaknesses.map((w, idx) => (
+                    <li key={idx}>{w.weaknesse}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-6">
+                <button
+                  onClick={() => setSelected(null)}
+                  className="w-full bg-yellow-400 text-black py-3 rounded-lg font-bold hover:bg-yellow-500 transition-colors"
+                >
+                  กลับ
+                </button>
+              </div>
+            </div>
+          </Slide>
+        )}
+
+      </div>
+    </MainLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"; // ✅ ตัด React ออก
+import { useState, useEffect, useMemo } from "react"; 
 import {
   GoogleMap,
   Marker,
@@ -13,8 +13,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { Slide, Zoom } from "react-awesome-reveal";
 import { API_URL } from "../../config/api";
+import MainLayout from "../atoms/MainLayout";
 
 type DiseaseReport = {
   id: number;
@@ -27,7 +27,10 @@ type DiseaseReport = {
   image_path: string;
 };
 
-const COLORS = ["#4ade80", "#22d3ee", "#facc15", "#f97316", "#f43f5e", "#8b5cf6"];
+const COLORS = [
+  "#4ade80",  "#2ce3ffff",   "#facc15",   "#f97316",   "#f43f5e",   
+  "#8b5cf6",   "#06a086ff",   "#10b981",   "#23529cff",  "#ec6482ff"
+];
 
 export default function Report() {
   const { isLoaded } = useJsApiLoader({
@@ -109,14 +112,12 @@ export default function Report() {
     return <p className="text-red-500 p-4 text-center">Error: {error}</p>;
 
   return (
+    <MainLayout>
     <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center space-y-8">
-      <Zoom>
         <h1 className="text-4xl md:text-5xl font-extrabold text-green-400">
           สถิติโรคข้าว 📊
         </h1>
-      </Zoom>
 
-      <Slide direction="up" cascade damping={0.2}>
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <select
             className="bg-zinc-800 border border-yellow-200 text-yellow-100 rounded-lg px-4 py-2 w-56"
@@ -140,7 +141,6 @@ export default function Report() {
             ))}
           </select>
         </div>
-      </Slide>
 
       <div className="w-full h-80 bg-zinc-800 rounded-2xl shadow-lg p-6">
         <ResponsiveContainer>
@@ -210,5 +210,6 @@ export default function Report() {
         )}
       </div>
     </div>
+    </MainLayout>
   );
 }
