@@ -25,7 +25,7 @@ function App() {
     animateScroll.scrollToTop({ duration: 0 });
   }, [location.pathname]);
 
-  // ซ่อน NavBar ถ้าอยู่ที่ / หรือ /register
+  // ซ่อน NavBar
   const hideNavBar = location.pathname === "/" || location.pathname === "/register" || location.pathname === "/disease-info" || location.pathname === "/riceVariety-info";
 
   return (

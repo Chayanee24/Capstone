@@ -56,7 +56,7 @@ def predict_from_url(image_url: str):
     predicted_label = label_map[predicted_index]
 
     # ✅ กรองภาพที่ไม่น่าใช่ข้าว
-    if confidence < 0.7:
+    if confidence < 0.6:
         return {
             "label": "Unknown / Not Rice",
             "confidence": confidence,
