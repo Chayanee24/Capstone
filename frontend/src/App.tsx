@@ -26,7 +26,7 @@ function App() {
   }, [location.pathname]);
 
   // ซ่อน NavBar ถ้าอยู่ที่ / หรือ /register
-  const hideNavBar = location.pathname === "/" || location.pathname === "/register";
+  const hideNavBar = location.pathname === "/" || location.pathname === "/register" || location.pathname === "/disease-info" || location.pathname === "/riceVariety-info";
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
@@ -40,6 +40,8 @@ function App() {
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/register" element={<Register />} />
         <Route path="/report" element={<Report />} />
+        <Route path="/disease-info" element={<DiseasePage />} />
+        <Route path="/riceVariety-info" element={<VarietyPage />} />
       </Routes>
       {/* <Footer /> */}
       </AuthProvider>
