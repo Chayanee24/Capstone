@@ -127,16 +127,16 @@ function Login() {
         <div className="flex gap-2">
           <button
             onClick={() => navigate("/riceVariety-info")}
-            className="w-1/2 py-2 bg-gradient-to-r from-green-500 to-green-400 
-                      hover:from-green-400 hover:to-green-300 
+            className="w-1/2 py-2 bg-gradient-to-r from-green-700 to-green-600 
+                      hover:from-green-600 hover:to-green-500 
                       text-white font-semibold rounded-lg shadow-md transition-all"
           >
             ดูข้อมูลพันธุ์ข้าว
           </button>
           <button
             onClick={() => navigate("/disease-info")}
-            className="w-1/2 py-2 bg-gradient-to-r from-emerald-600 to-green-500 
-                      hover:from-emerald-500 hover:to-green-400 
+            className="w-1/2 py-2 bg-gradient-to-r from-emerald-700 to-green-600 
+                      hover:from-emerald-600 hover:to-green-500 
                       text-white font-semibold rounded-lg shadow-md transition-all"
           >
             ดูข้อมูลโรคของข้าว
