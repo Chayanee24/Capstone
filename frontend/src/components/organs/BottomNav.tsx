@@ -1,8 +1,13 @@
 import { House, ClipboardText, Leaf, User, MagnifyingGlass } from "@phosphor-icons/react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // ดึง AuthContext มาใช้
 
 const BottomNav = () => {
   const location = useLocation();
+  const { user } = useAuth(); // เอา user จาก AuthContext
+
+  // ถ้า user ยังไม่ได้ login -> ไม่ต้องแสดง BottomNav
+  if (!user) return null;
 
   const navItems = [
     { name: "หน้าแรก", path: "/home", icon: <House size={24} /> },
