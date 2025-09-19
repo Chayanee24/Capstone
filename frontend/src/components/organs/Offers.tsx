@@ -53,7 +53,7 @@ const Offers = () => {
       <main className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 lg:gap-16">
         
         {/* รูปภาพ */}
-        <div className="w-full h-64 sm:h-80 md:h-[500px] lg:h-[800px]">
+        <div className="w-full h-64 sm:h-80 md:h-[800px] lg:h-[800px]">
           <img src={Offer} alt="Offer Image" className="w-full h-full object-cover rounded-lg" />
         </div>
 
