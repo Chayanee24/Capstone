@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react"; 
-import { useNavigate } from "react-router-dom";
 import {
   GoogleMap,
   Marker,
@@ -40,7 +39,6 @@ const COLORS = [
 ];
 
 export default function Report() {
-  const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDw7TcjDnnZxMpPZBXUMECRMSAkiwagkeY",
   });
