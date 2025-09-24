@@ -60,7 +60,7 @@ const Diagnosis = () => {
         body: formData,
       })
 
-      if (!analyzeResponse.ok) throw new Error("ไม่สามารถวิเคราะห์ได้")
+      if (!analyzeResponse.ok) throw new Error("เกิดข้อผิดพลาด ไม่สามารถวิเคราะห์ได้!")
       const analyzeData: { prediction: string } = await analyzeResponse.json()
 
       const allResponse = await fetch(`${API_URL}/disease/all`)

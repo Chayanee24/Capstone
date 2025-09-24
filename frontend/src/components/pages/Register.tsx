@@ -112,7 +112,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-semibold">รหัสผ่าน</label>
+            <label className="block mb-1 text-sm font-semibold">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
             <input
               type="password"
               name="password"
