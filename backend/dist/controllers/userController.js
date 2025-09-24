@@ -8,8 +8,8 @@ const supabase_1 = __importDefault(require("../services/supabase"));
 // ✅ REGISTER
 const registerUser = async (req, res) => {
     var _a;
-    const { email, password, username, phone } = req.body;
-    //console.log(role_id)
+    let { email, password, username, phone } = req.body;
+    email = email.trim().toLowerCase();
     const { data, error } = await supabase_1.default.auth.signUp({
         email,
         password,
@@ -22,30 +22,28 @@ const registerUser = async (req, res) => {
         }
     });
     const authUserId = (_a = data.user) === null || _a === void 0 ? void 0 : _a.id;
-    //insert ลง public.Users
-    await supabase_1.default
-        .from('Users')
-        .insert([{ user_id: authUserId, role_id: 1 }]);
     if (error) {
         res.status(400).json({ error: error.message });
         return;
     }
+    // insert ลง public.Users
+    await supabase_1.default
+        .from('Users')
+        .insert([{ user_id: authUserId, role_id: 1 }]);
     res.status(201).json({ message: 'User registered successfully', data });
 };
 exports.registerUser = registerUser;
 // ✅ LOGIN
 const loginUser = async (req, res) => {
     var _a;
-    const { email, password } = req.body;
-    //console.log(email);
-    //console.log(password);
+    let { email, password } = req.body;
+    email = email.trim().toLowerCase();
     const { data, error } = await supabase_1.default.auth.signInWithPassword({
         email,
         password
     });
     if (error) {
         res.status(400).json({ error: error.message });
-        //console.log(error);
         return;
     }
     res.json({
@@ -57,15 +55,16 @@ const loginUser = async (req, res) => {
 exports.loginUser = loginUser;
 const getUsers = async (req, res) => {
     try {
-        const { email } = req.params;
-        // ดึง user จาก auth ด้วย email
+        let { email } = req.params;
+        email = email.trim().toLowerCase();
+        // ดึง user จาก auth ทั้งหมด
         const { data: authData, error: authError } = await supabase_1.default.auth.admin.listUsers();
         if (authError) {
             res.status(400).json({ error: authError.message });
             return;
         }
         // หา user ที่ตรงกับ email
-        const user = authData.users.find((u) => u.email === email);
+        const user = authData.users.find((u) => { var _a; return ((_a = u.email) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === email; });
         if (!user) {
             res.status(404).json({ error: "User not found" });
             return;
@@ -84,7 +83,6 @@ const getUsers = async (req, res) => {
         const result = {
             ...user,
             profile: profileData || null,
-            //role: profileData?.Roles || null,
         };
         res.json({ data: result });
     }

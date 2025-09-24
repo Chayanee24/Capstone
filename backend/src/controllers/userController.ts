@@ -3,8 +3,9 @@ import supabase from '../services/supabase'
 
 // ✅ REGISTER
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, username, phone } = req.body
-  //console.log(role_id)
+  let { email, password, username, phone } = req.body
+
+  email = email.trim().toLowerCase()
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -20,25 +21,24 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   
   const authUserId = data.user?.id;
 
-  //insert ลง public.Users
-  await supabase
-    .from('Users')
-    .insert([{ user_id: authUserId, role_id: 1 }]);
-
   if (error) {
     res.status(400).json({ error: error.message })
     return
   }
+
+  // insert ลง public.Users
+  await supabase
+    .from('Users')
+    .insert([{ user_id: authUserId, role_id: 1 }]);
 
   res.status(201).json({ message: 'User registered successfully', data })
 }
 
 // ✅ LOGIN
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body
+  let { email, password } = req.body
 
-  //console.log(email);
-  //console.log(password);
+  email = email.trim().toLowerCase()
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -47,7 +47,6 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
   if (error) {
     res.status(400).json({ error: error.message })
-    //console.log(error);
     return
   }
 
@@ -60,9 +59,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email } = req.params;
+    let { email } = req.params;
 
-    // ดึง user จาก auth ด้วย email
+    email = email.trim().toLowerCase()
+
+    // ดึง user จาก auth ทั้งหมด
     const { data: authData, error: authError } = await supabase.auth.admin.listUsers();
     if (authError) {
       res.status(400).json({ error: authError.message });
@@ -70,7 +71,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     }
 
     // หา user ที่ตรงกับ email
-    const user = authData.users.find((u) => u.email === email);
+    const user = authData.users.find((u) => u.email?.toLowerCase() === email);
     if (!user) {
       res.status(404).json({ error: "User not found" });
       return;
@@ -92,7 +93,6 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     const result = {
       ...user,
       profile: profileData || null,
-      //role: profileData?.Roles || null,
     };
 
     res.json({ data: result });
@@ -100,8 +100,3 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ error: err.message });
   }
 };
-
-
-
-
-
