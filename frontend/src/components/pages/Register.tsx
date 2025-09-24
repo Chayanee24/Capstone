@@ -19,7 +19,7 @@ function Register() {
     password: "",
     role_id: "",
   });
-  const [roles, setRoles] = useState<Roles[]>([]);
+  const [,setRoles] = useState<Roles[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
