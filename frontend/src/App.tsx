@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState, type JSX } from "react";
 import { animateScroll } from "react-scroll";
+
 import Home from "./components/pages/Home";
 import Diagnosis from "./components/pages/Diagnosis";
 import DiseasePage from "./components/pages/DiseasePage";
@@ -16,7 +17,7 @@ import { useAuth } from "./components/context/AuthContext";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
-  if (!user) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to="/" replace />; // replace ป้องกัน back
   return children;
 }
 
@@ -36,15 +37,10 @@ export default function App() {
     animateScroll.scrollToTop({ duration: 0 });
   }, [location.pathname]);
 
-  // ตรวจ path ที่ต้องซ่อน BottomNav
+  // ตรวจหน้า info page เพื่อซ่อน BottomNav และแสดง Back button
   const infoPaths = ["/disease-info", "/riceVariety-info"];
-  const showBackButton = infoPaths.some((path) =>
-    location.pathname.startsWith(path)
-  );
-  const hideBottom =
-    showBackButton ||
-    location.pathname === "/" ||
-    location.pathname === "/register";
+  const showBackButton = infoPaths.some(path => location.pathname.startsWith(path));
+  const hideBottom = showBackButton || location.pathname === "/" || location.pathname === "/register";
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
@@ -70,36 +66,18 @@ export default function App() {
             <Route path="/riceVariety-info" element={<VarietyPage />} />
 
             {/* Protected pages */}
-            <Route
-              path="/home"
-              element={<ProtectedRoute><Home /></ProtectedRoute>}
-            />
-            <Route
-              path="/diagnosis"
-              element={<ProtectedRoute><Diagnosis /></ProtectedRoute>}
-            />
-            <Route
-              path="/diseases"
-              element={<ProtectedRoute><DiseasePage /></ProtectedRoute>}
-            />
-            <Route
-              path="/varieties"
-              element={<ProtectedRoute><VarietyPage /></ProtectedRoute>}
-            />
-            <Route
-              path="/profile"
-              element={<ProtectedRoute><Profile /></ProtectedRoute>}
-            />
-            <Route
-              path="/report"
-              element={<ProtectedRoute><Report /></ProtectedRoute>}
-            />
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/diagnosis" element={<ProtectedRoute><Diagnosis /></ProtectedRoute>} />
+            <Route path="/diseases" element={<ProtectedRoute><DiseasePage /></ProtectedRoute>} />
+            <Route path="/varieties" element={<ProtectedRoute><VarietyPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/report" element={<ProtectedRoute><Report /></ProtectedRoute>} />
           </>
         )}
       </Routes>
 
-      {/* BottomNav แสดงเฉพาะเมื่อ login แล้ว และไม่อยู่ในหน้า hideBottom */}
-      {user && !hideBottom && <BottomNav />}
+      {/* BottomNav แสดงเฉพาะหน้าไม่ถูกซ่อน และ login แล้ว */}
+      {!hideBottom && !!user && <BottomNav />}
     </div>
   );
 }

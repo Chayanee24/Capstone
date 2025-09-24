@@ -25,6 +25,7 @@ function Login() {
       const res = await axios.post(`${API_URL}/users/login`, { email, password });
 
       if (res.data.success) {
+        // เก็บ email ไว้ใน localStorage
         localStorage.setItem("email", email);
 
         const roleRes = await axios.get(`${API_URL}/users/${email}`);
@@ -34,10 +35,14 @@ function Login() {
         const displayName = roleRes.data?.data?.user_metadata?.display_name || email;
 
         localStorage.setItem("id", user_id);
+
         const loggedUser = { email, role_name: roleName, display_name: displayName };
         setUser(loggedUser);
 
-        navigate("/home");
+        // navigate ด้วย replace ป้องกัน back
+        navigate("/home", { replace: true });
+        // เคลียร์ history หน้าเก่าให้แน่นอน
+        window.history.replaceState(null, "", "/home");
       } else {
         setError(res.data.message || "เข้าสู่ระบบไม่สำเร็จ");
       }
@@ -121,26 +126,26 @@ function Login() {
 
         {/* Guest Access */}
         <div className="mt-6 border-t border-zinc-700 pt-4">
-        <p className="text-center text-sm text-zinc-400 mb-2">
-          หรือสามารถเข้าดูข้อมูลได้โดยไม่ต้องเข้าสู่ระบบ
-        </p>
-        <div className="flex gap-2">
-          <button
-            onClick={() => navigate("/riceVariety-info")}
-            className="w-1/2 py-2 bg-gradient-to-r from-green-700 to-green-600 
-                      hover:from-green-600 hover:to-green-500 
-                      text-white font-semibold rounded-lg shadow-md transition-all"
-          >
-            ดูข้อมูลพันธุ์ข้าว
-          </button>
-          <button
-            onClick={() => navigate("/disease-info")}
-            className="w-1/2 py-2 bg-gradient-to-r from-emerald-700 to-green-600 
-                      hover:from-emerald-600 hover:to-green-500 
-                      text-white font-semibold rounded-lg shadow-md transition-all"
-          >
-            ดูข้อมูลโรคของข้าว
-          </button>
+          <p className="text-center text-sm text-zinc-400 mb-2">
+            หรือสามารถเข้าดูข้อมูลได้โดยไม่ต้องเข้าสู่ระบบ
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/riceVariety-info")}
+              className="w-1/2 py-2 bg-gradient-to-r from-green-700 to-green-600 
+                        hover:from-green-600 hover:to-green-500 
+                        text-white font-semibold rounded-lg shadow-md transition-all"
+            >
+              ข้อมูลพันธุ์ข้าว
+            </button>
+            <button
+              onClick={() => navigate("/disease-info")}
+              className="w-1/2 py-2 bg-gradient-to-r from-emerald-700 to-green-600 
+                        hover:from-emerald-600 hover:to-green-500 
+                        text-white font-semibold rounded-lg shadow-md transition-all"
+            >
+              ข้อมูลโรคข้าว
+            </button>
           </div>
         </div>
       </div>
