@@ -21,8 +21,7 @@ async function seedRoles() {
     }
     if (data.length == 0) {
         await supabase.from('Roles').insert([
-            { role_name: 'ชาวนา' },
-            { role_name: 'เจ้าหน้าที่กระทรวงเกษตรฯ' }
+            { role_name: 'เกษตรกร' },
         ]);
     }
 }
@@ -97,11 +96,10 @@ async function seedUsers() {
             password: '123456789',
             display_name: 'User2',
             phone: '0900000000',
-            role_id: 2
+            role_id: 1
         }
     ];
     for (const u of usersData) {
-        // 1. list users จาก auth
         const { data: userList, error: listError } = await supabase.auth.admin.listUsers({
             page: 1,
             perPage: 1000
@@ -113,11 +111,9 @@ async function seedUsers() {
         let authUserId = null;
         const existingAuth = userList.users.find(user => user.email === u.email);
         if (existingAuth) {
-            // ใช้ uid เดิมของ auth.users
             authUserId = existingAuth.id;
         }
         else {
-            // ยังไม่มี user ใน auth → สร้างใหม่
             const { data: signUpData, error: signUpError } = await supabase.auth.admin.createUser({
                 email: u.email,
                 password: u.password,

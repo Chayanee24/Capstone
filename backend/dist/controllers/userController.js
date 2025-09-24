@@ -8,9 +8,8 @@ const supabase_1 = __importDefault(require("../services/supabase"));
 // ✅ REGISTER
 const registerUser = async (req, res) => {
     var _a;
-    const { email, password, username, role_id, phone } = req.body;
+    const { email, password, username, phone } = req.body;
     //console.log(role_id)
-    // ใช้ auth.signup
     const { data, error } = await supabase_1.default.auth.signUp({
         email,
         password,
@@ -26,7 +25,7 @@ const registerUser = async (req, res) => {
     //insert ลง public.Users
     await supabase_1.default
         .from('Users')
-        .insert([{ user_id: authUserId, role_id: role_id }]);
+        .insert([{ user_id: authUserId, role_id: 1 }]);
     if (error) {
         res.status(400).json({ error: error.message });
         return;
@@ -74,8 +73,8 @@ const getUsers = async (req, res) => {
         // ดึง profile + role ที่เชื่อม
         const { data: profileData, error: profileError } = await supabase_1.default
             .from("Users")
-            .select("*, Roles(*)") // join role
-            .eq("user_id", user.id) // ใช้ uid เชื่อมกับ auth
+            .select("*, Roles(*)")
+            .eq("user_id", user.id)
             .single();
         if (profileError) {
             res.status(400).json({ error: profileError.message });

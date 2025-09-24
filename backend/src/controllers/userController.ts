@@ -3,9 +3,9 @@ import supabase from '../services/supabase'
 
 // ✅ REGISTER
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, username, role_id, phone } = req.body
+  const { email, password, username, phone } = req.body
   //console.log(role_id)
-  // ใช้ auth.signup
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -23,7 +23,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
   //insert ลง public.Users
   await supabase
     .from('Users')
-    .insert([{ user_id: authUserId, role_id: role_id }]);
+    .insert([{ user_id: authUserId, role_id: 1 }]);
 
   if (error) {
     res.status(400).json({ error: error.message })
@@ -79,8 +79,8 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     // ดึง profile + role ที่เชื่อม
     const { data: profileData, error: profileError } = await supabase
       .from("Users")
-      .select("*, Roles(*)") // join role
-      .eq("user_id", user.id) // ใช้ uid เชื่อมกับ auth
+      .select("*, Roles(*)") 
+      .eq("user_id", user.id) 
       .single();
 
     if (profileError) {
