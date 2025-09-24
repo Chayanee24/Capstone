@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
 
-  // โหลด user จาก localStorage เมื่อเริ่มต้นแอป
+  // โหลด user จาก localStorage เมื่อเปิดเว็บครั้งแรก
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem("user"); // ล้างข้อมูลออกด้วย
   };
 
   return (

@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plant, Leaf, ChartLineUp, MagnifyingGlass } from "@phosphor-icons/react";
 import { Fade } from "react-awesome-reveal";
-import { useAuth } from "../context/AuthContext";
 import { Text } from "../atoms/Text";
 import { List } from "../atoms/List";
 import Offer from "../../assets/rice/2.jpg";
@@ -10,8 +9,6 @@ import { OfferTexts } from "../particles/Data";
 
 const Offers = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
-
   const renderIcon = useCallback((caption: string) => {
     switch (caption) {
       case "ข้อมูลพันธุ์ข้าว":
@@ -42,16 +39,10 @@ const Offers = () => {
     }
   };
 
-  const canShowOffer = (offerItem: typeof OfferTexts.list[0]) => {
-    if (!offerItem.role) return true;
-    if (!user) return false;
-    return offerItem.role.includes(user.role_name);
-  };
-
   return (
     <section className="w-full h-auto flex items-center">
       <main className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 lg:gap-16">
-        
+
         {/* รูปภาพ */}
         <div className="w-full h-64 sm:h-80 md:h-[800px] lg:h-[800px]">
           <img src={Offer} alt="Offer Image" className="w-full h-full object-cover rounded-lg" />
@@ -60,9 +51,18 @@ const Offers = () => {
         {/* ข้อความและรายการ */}
         <div className="h-full w-full px-4 sm:px-6 lg:px-10 flex flex-col justify-center gap-6 sm:gap-10 lg:gap-16">
           <Fade cascade damping={0.1} className="w-full">
-            
+
             <div className="flex flex-col items-center relative mt-6 sm:mt-10 lg:mt-24">
-              <Text as="h1" className="text-white/90 text-2xl sm:text-3xl lg:text-5xl font-bold text-center">
+              <Text
+                as="p"
+                className="text-amber-500 text-sm sm:text-base lg:text-lg tracking-wide uppercase font-semibold mb-3"
+              >
+                {OfferTexts.firstText}
+              </Text>
+              <Text
+                as="h1"
+                className="text-white/90 text-3xl sm:text-4xl lg:text-5xl font-bold text-center leading-snug"
+              >
                 {OfferTexts.secondText}
               </Text>
               <div className="absolute -bottom-2 sm:-bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 rounded-lg bg-gradient-to-r from-yellow-400 to-green-400"></div>
@@ -70,7 +70,6 @@ const Offers = () => {
 
             <ul className="flex flex-col gap-4 sm:gap-6 lg:gap-8 mt-6">
               {OfferTexts.list
-                .filter(canShowOffer)
                 .map((item, index) => (
                   <List key={index} className="flex w-full">
                     <div

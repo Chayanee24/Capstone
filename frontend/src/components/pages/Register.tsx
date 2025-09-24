@@ -124,7 +124,7 @@ function Register() {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block mb-1 text-sm font-semibold">คุณเป็นใคร</label>
             <select
               name="role_id"
@@ -140,7 +140,7 @@ function Register() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <button
             type="submit"

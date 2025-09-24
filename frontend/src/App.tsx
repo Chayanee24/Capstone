@@ -36,10 +36,15 @@ export default function App() {
     animateScroll.scrollToTop({ duration: 0 });
   }, [location.pathname]);
 
-  // ตรวจหน้า info page เพื่อซ่อน BottomNav และแสดง Back button
+  // ตรวจ path ที่ต้องซ่อน BottomNav
   const infoPaths = ["/disease-info", "/riceVariety-info"];
-  const showBackButton = infoPaths.some(path => location.pathname.startsWith(path));
-  const hideBottom = showBackButton || location.pathname === "/" || location.pathname === "/register";
+  const showBackButton = infoPaths.some((path) =>
+    location.pathname.startsWith(path)
+  );
+  const hideBottom =
+    showBackButton ||
+    location.pathname === "/" ||
+    location.pathname === "/register";
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
@@ -66,18 +71,36 @@ export default function App() {
             <Route path="/riceVariety-info" element={<VarietyPage />} />
 
             {/* Protected pages */}
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/diagnosis" element={<ProtectedRoute><Diagnosis /></ProtectedRoute>} />
-            <Route path="/diseases" element={<ProtectedRoute><DiseasePage /></ProtectedRoute>} />
-            <Route path="/varieties" element={<ProtectedRoute><VarietyPage /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/report" element={<ProtectedRoute><Report /></ProtectedRoute>} />
+            <Route
+              path="/home"
+              element={<ProtectedRoute><Home /></ProtectedRoute>}
+            />
+            <Route
+              path="/diagnosis"
+              element={<ProtectedRoute><Diagnosis /></ProtectedRoute>}
+            />
+            <Route
+              path="/diseases"
+              element={<ProtectedRoute><DiseasePage /></ProtectedRoute>}
+            />
+            <Route
+              path="/varieties"
+              element={<ProtectedRoute><VarietyPage /></ProtectedRoute>}
+            />
+            <Route
+              path="/profile"
+              element={<ProtectedRoute><Profile /></ProtectedRoute>}
+            />
+            <Route
+              path="/report"
+              element={<ProtectedRoute><Report /></ProtectedRoute>}
+            />
           </>
         )}
       </Routes>
 
-      {/* BottomNav แสดงเฉพาะหน้าไม่ถูกซ่อน และ login แล้ว */}
-      {!hideBottom && !!user && <BottomNav />}
+      {/* BottomNav แสดงเฉพาะเมื่อ login แล้ว และไม่อยู่ในหน้า hideBottom */}
+      {user && !hideBottom && <BottomNav />}
     </div>
   );
 }

@@ -70,8 +70,8 @@ const Diagnosis = () => {
       const allData: Disease[] = Array.isArray(allDataRaw)
         ? allDataRaw
         : Array.isArray(allDataRaw.data)
-        ? allDataRaw.data
-        : []
+          ? allDataRaw.data
+          : []
 
       const disease = allData.find((d) => d.disease_name === analyzeData.prediction)
       if (!disease) throw new Error("ไม่พบข้อมูลโรค")
@@ -92,115 +92,120 @@ const Diagnosis = () => {
 
   return (
     <MainLayout>
-    <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
-      {!result && (
-      <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-6">
-        วินิจฉัยโรคข้าว 🔍
-      </h1>
-      )}
+      <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
+        {!result && (
+          <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-6">
+            วินิจฉัยโรคข้าว 🔍
+          </h1>
+        )}
 
-      {/* ยังไม่มีผลการวินิจฉัย → แสดงปุ่มอัปโหลด */}
-      {!result && (
-        <>
-          <p className="mb-6 text-center text-zinc-300 max-w-2xl">
-            ถ่ายรูปใบข้าวหรือเลือกจากคลังรูปเพื่อตรวจสอบอาการ
-          </p>
+        {/* ยังไม่มีผลการวินิจฉัย → แสดงปุ่มอัปโหลด */}
+        {!result && (
+          <>
+            <p className="mb-6 text-center text-zinc-300 max-w-2xl">
+              ถ่ายรูปใบข้าวหรือเลือกจากคลังรูปเพื่อตรวจสอบอาการ
+            </p>
 
-          <div className="flex flex-wrap gap-4 mb-6 justify-center">
-            <label className="cursor-pointer bg-green-400 text-white px-6 py-3 rounded-lg hover:bg-green-500 transition-colors">
-              ถ่ายรูป
-              <input
-                type="file"
-                accept="image/*"
-                capture="environment"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </label>
+            <div className="flex flex-wrap gap-4 mb-6 justify-center">
+              <label className="cursor-pointer bg-green-400 text-white px-6 py-3 rounded-lg hover:bg-green-500 transition-colors">
+                ถ่ายรูป
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
 
-            <label className="cursor-pointer bg-blue-400 text-white px-6 py-3 rounded-lg hover:bg-blue-500 transition-colors">
-              เลือกรูปจากคลัง
-              <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
-            </label>
+              <label className="cursor-pointer bg-blue-400 text-white px-6 py-3 rounded-lg hover:bg-blue-500 transition-colors">
+                เลือกรูปจากคลัง
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture={false}
+                  className="hidden"
+                  onChange={handleImageChange} />
+              </label>
 
-            <button
-              onClick={analyzeImage}
-              disabled={!selectedImage || loading}
-              className="bg-yellow-400 text-white px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors disabled:opacity-50"
-            >
-              {loading ? "กำลังวิเคราะห์..." : "วิเคราะห์"}
-            </button>
-          </div>
-        </>
-      )}
-
-      {/* แสดงรูป preview */}
-      {preview && (
-        <div className="w-full flex justify-center mb-6">
-          <div className="relative">
-            <img src={preview} alt="preview" className="w-60 h-60 object-cover rounded-lg shadow-lg" />
-            {!result && (
               <button
-                onClick={resetDiagnosis}
-                className="absolute top-2 right-2 bg-red-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-lg"
+                onClick={analyzeImage}
+                disabled={!selectedImage || loading}
+                className="bg-yellow-400 text-white px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors disabled:opacity-50"
               >
-                ×
+                {loading ? "กำลังวิเคราะห์..." : "วิเคราะห์"}
               </button>
-            )}
+            </div>
+          </>
+        )}
+
+        {/* แสดงรูป preview */}
+        {preview && (
+          <div className="w-full flex justify-center mb-6">
+            <div className="relative">
+              <img src={preview} alt="preview" className="w-60 h-60 object-cover rounded-lg shadow-lg" />
+              {!result && (
+                <button
+                  onClick={resetDiagnosis}
+                  className="absolute top-2 right-2 bg-red-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-lg"
+                >
+                  ×
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* ถ้ามีผลการวินิจฉัย */}
-      {result && (
-        <Slide direction="up">
-          <p className="text-green-200 font-extrabold text-3xl md:text-4xl mb-5 underline">
-            ผลการวินิจฉัย
-          </p>
-          <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md backdrop-blur-md border border-green-700">
-            <h2 className="text-2xl font-bold text-green-300 mb-2 drop-shadow-md">
-              {result.diseaseName}
-            </h2>
+        {/* ถ้ามีผลการวินิจฉัย */}
+        {result && (
+          <Slide direction="up">
+            <p className="text-green-200 font-extrabold text-3xl md:text-4xl mb-5 underline">
+              ผลการวินิจฉัย
+            </p>
+            <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md backdrop-blur-md border border-green-700">
+              <h2 className="text-2xl font-bold text-green-300 mb-2 drop-shadow-md">
+                {result.diseaseName}
+              </h2>
 
-            {/* สาเหตุ */}
-            <div className="mb-4 text-green-100/80">
-              <strong className="block mb-1 font-bold text-yellow-200">สาเหตุ:</strong>
-              <ul className="list-disc list-inside space-y-1">
-                {result.cause
-                  ? result.cause
+              {/* สาเหตุ */}
+              <div className="mb-4 text-green-100/80">
+                <strong className="block mb-1 font-bold text-yellow-200">สาเหตุ:</strong>
+                <ul className="list-disc list-inside space-y-1">
+                  {result.cause
+                    ? result.cause
                       .split(/(?=<u>)/)
                       .map((line, i) =>
                         line.trim() ? (
                           <li key={i}>{line.replace(/<[^>]+>/g, "").trim()}</li>
                         ) : null
                       )
-                  : <li>- ไม่มีข้อมูล</li>}
-              </ul>
-            </div>
+                    : <li>- ไม่มีข้อมูล</li>}
+                </ul>
+              </div>
 
-            {/* การดูแลรักษา */}
-            <div className="text-green-100/80 mb-6">
-              <strong className="block mb-1 font-bold text-yellow-200">การดูแลรักษา:</strong>
-              <ul className="list-disc list-inside space-y-1">
-                {result.treatment?.length
-                  ? result.treatment.map((text, i) => <li key={i}>{text}</li>)
-                  : <li>- ไม่มีข้อมูล</li>}
-              </ul>
-            </div>
+              {/* การดูแลรักษา */}
+              <div className="text-green-100/80 mb-6">
+                <strong className="block mb-1 font-bold text-yellow-200">การดูแลรักษา:</strong>
+                <ul className="list-disc list-inside space-y-1">
+                  {result.treatment?.length
+                    ? result.treatment.map((text, i) => <li key={i}>{text}</li>)
+                    : <li>- ไม่มีข้อมูล</li>}
+                </ul>
+              </div>
 
-            {/* ปุ่มวิเคราะห์ใหม่ */}
-            <div className="flex justify-center">
-              <button
-                onClick={resetDiagnosis}
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-full shadow-md transition-all"
-              >
-                🔄 วิเคราะห์ใหม่
-              </button>
+              {/* ปุ่มวิเคราะห์ใหม่ */}
+              <div className="flex justify-center">
+                <button
+                  onClick={resetDiagnosis}
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-full shadow-md transition-all"
+                >
+                  🔄 วิเคราะห์ใหม่
+                </button>
+              </div>
             </div>
-          </div>
-        </Slide>
-      )}
-    </div>
+          </Slide>
+        )}
+      </div>
     </MainLayout>
   )
 }
