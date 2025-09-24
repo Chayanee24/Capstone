@@ -1,7 +1,6 @@
 // src/pages/VarietyPage.tsx
 import { useEffect, useState } from "react";
 import { Slide } from "react-awesome-reveal";
-import MainLayout from "../atoms/MainLayout";
 import { API_URL } from "../../config/api";
 
 interface Morphology {
@@ -50,7 +49,6 @@ const VarietyPage = () => {
   }, []);
 
   return (
-    <MainLayout>
       <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
         {!selected && (
           <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-4">
@@ -136,7 +134,6 @@ const VarietyPage = () => {
         )}
 
       </div>
-    </MainLayout>
   );
 };
 

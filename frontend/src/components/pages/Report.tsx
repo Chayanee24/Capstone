@@ -14,7 +14,6 @@ import {
   Legend,
 } from "recharts";
 import { API_URL } from "../../config/api";
-import MainLayout from "../atoms/MainLayout";
 
 type DiseaseReport = {
   id: number;
@@ -144,7 +143,6 @@ export default function Report() {
     return <p className="text-red-500 p-4 text-center">Error: {error}</p>;
 
   return (
-    <MainLayout>
       <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center space-y-8">
 
         <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 text-center">
@@ -262,6 +260,5 @@ export default function Report() {
           )}
         </div>
       </div>
-    </MainLayout>
   );
 }

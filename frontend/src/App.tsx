@@ -55,7 +55,6 @@ export default function App() {
           className="fixed top-4 left-4 flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg z-50 transition-colors duration-200"
         >
           <ArrowLeft size={20} weight="bold" />
-          <span className="font-medium text-sm">ย้อนกลับ</span>
         </button>
       )}
 

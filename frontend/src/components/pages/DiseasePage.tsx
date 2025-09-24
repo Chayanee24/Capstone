@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import { API_URL } from "../../config/api";
-import MainLayout from "../atoms/MainLayout";
 
 interface SolutionItem {
   solution_text: string;
@@ -94,7 +93,6 @@ const DiseasePage = () => {
   };
 
   return (
-    <MainLayout>
     <div className="w-full min-h-screen bg-zinc-900 p-6 flex flex-col items-center">
 
       {/* แสดงส่วน search เฉพาะเมื่อยังไม่เลือกโรค */}
@@ -202,7 +200,6 @@ const DiseasePage = () => {
         </Slide>
       )}
     </div>
-    </MainLayout>
   );
 };
 
