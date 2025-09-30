@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Slide } from "react-awesome-reveal"
 import { API_URL } from "../../config/api";
-import MainLayout from "../atoms/MainLayout";
 
 interface Disease {
   disease_name: string
@@ -91,7 +90,6 @@ const Diagnosis = () => {
   }
 
   return (
-    <MainLayout>
       <div className="w-full min-h-screen bg-zinc-900 text-white p-6 flex flex-col items-center">
         {!result && (
           <h1 className="text-4xl md:text-5xl font-extrabold text-green-400 mb-6">
@@ -206,7 +204,6 @@ const Diagnosis = () => {
           </Slide>
         )}
       </div>
-    </MainLayout>
   )
 }
 

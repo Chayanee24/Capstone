@@ -131,7 +131,7 @@ const topProvinces: TopProvince[] = useMemo(() => {
       return {
         province,
         disease_name: topDisease,
-        total_cases: topCount, // ✅ จำนวนครั้งจริงของโรคนั้น
+        total_cases: topCount, // จำนวนครั้งจริงของโรคนั้น
       };
     }
   );

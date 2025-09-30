@@ -6,7 +6,7 @@ const BottomNav = () => {
   const location = useLocation();
   const { user } = useAuth(); // เอา user จาก AuthContext
 
-  // ถ้า user ยังไม่ได้ login -> ไม่ต้องแสดง BottomNav
+  // ถ้า user ยังไม่ได้ login ไม่ต้องแสดง BottomNav
   if (!user) return null;
 
   const navItems = [
