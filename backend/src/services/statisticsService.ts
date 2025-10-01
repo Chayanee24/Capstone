@@ -30,7 +30,7 @@ export const updateDiseaseStatisticService = async (
     { headers: { "User-Agent": "my-app" } }
   )
   const geoData = (await geoResponse.json()) as NominatimResponse
-  // ✅ ใช้ state เป็นหลัก (คือจังหวัด)
+  //ใช้ state เป็นหลัก (คือจังหวัด)
   let province = geoData.address?.province || geoData.address?.city || "Unknown"
   if (province.startsWith("จังหวัด")) {
     province = province.replace("จังหวัด", "").trim()
