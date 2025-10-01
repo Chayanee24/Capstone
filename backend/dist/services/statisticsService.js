@@ -16,7 +16,7 @@ const updateDiseaseStatisticService = async (diseaseName, latitude, longitude) =
     // 📌 province จาก Nominatim
     const geoResponse = await (0, node_fetch_1.default)(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=7&addressdetails=1`, { headers: { "User-Agent": "my-app" } });
     const geoData = (await geoResponse.json());
-    // ✅ ใช้ state เป็นหลัก (คือจังหวัด)
+    //ใช้ state เป็นหลัก (คือจังหวัด)
     let province = ((_a = geoData.address) === null || _a === void 0 ? void 0 : _a.province) || ((_b = geoData.address) === null || _b === void 0 ? void 0 : _b.city) || "Unknown";
     if (province.startsWith("จังหวัด")) {
         province = province.replace("จังหวัด", "").trim();
