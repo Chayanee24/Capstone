@@ -17,6 +17,17 @@ const API_ALL = `${API_URL}/disease/all`;
 const normalizeThai = (s: string) =>
   s?.normalize("NFC").replace(/\s+/g, " ").trim();
 
+const diseaseImages: Record<string, string> = {
+  "โรคไหม้": "/images/diseases/โรคไหม้.JPG",
+  "โรคใบจุดสีน้ำตาล": "/images/diseases/โรคใบจุดสีน้ำตาล.JPG",
+  "โรคขอบใบแห้ง": "/images/diseases/โรคขอบใบแห้ง.JPG",
+  "โรคกาบใบแห้ง": "/images/diseases/โรคกาบใบแห้ง.JPG",
+  "โรคใบขีดสีน้ำตาล": "/images/diseases/โรคใบขีดสีน้ำตาล.JPG",
+  "โรคใบสีส้ม": "/images/diseases/โรคใบสีส้ม.JPG",
+  "โรคแมลงดำหนามข้าว": "/images/diseases/โรคแมลงดำหนามข้าว.JPG",
+  "โรคใบวงสีน้ำตาล": "/images/diseases/โรคใบวงสีน้ำตาล.JPG"
+};
+
 const DiseasePage = () => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<DiseaseInfo | null>(null);
@@ -154,28 +165,39 @@ const DiseasePage = () => {
       {/* แสดงผลลัพธ์ */}
       {result && (
         <Slide direction="up">
-          <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md backdrop-blur-md border border-green-700">
-            <h2 className="text-2xl font-bold text-green-300 mb-2 drop-shadow-md">
+          <div className="bg-green-900/50 p-6 rounded-xl shadow-lg w-full max-w-md backdrop-blur-md border border-green-700 items-center">
+            <h2 className="text-2xl font-bold text-green-300 mb-2 drop-shadow-md text-center">
               {result.disease_name}
             </h2>
 
+            {/* แสดงภาพถ้ามีใน mapping */}
+            {diseaseImages[result.disease_name] && (
+              <div className="mb-4 flex justify-center">
+                <img
+                  src={diseaseImages[result.disease_name]}
+                  alt={result.disease_name}
+                  className="rounded-lg shadow-md w-64 h-64 object-cover"
+                />
+              </div>
+            )}
+
             <div className="mb-4 text-green-100/80">
-              <strong className="block mb-1 font-bold text-yellow-200">สาเหตุ:</strong>
+              <strong className="block mb-1 font-bold text-yellow-200">สาเหตุ :</strong>
               <ul className="list-disc list-inside space-y-1">
                 {result.symptom
                   ? result.symptom
-                      .split(/(?=<u>)/)
-                      .map((line, i) =>
-                        line.trim() ? (
-                          <li key={i}>{line.replace(/<[^>]+>/g, "").trim()}</li>
-                        ) : null
-                      )
+                    .split(/(?=<u>)/)
+                    .map((line, i) =>
+                      line.trim() ? (
+                        <li key={i}>{line.replace(/<[^>]+>/g, "").trim()}</li>
+                      ) : null
+                    )
                   : <li>- ไม่มีข้อมูล</li>}
               </ul>
             </div>
 
             <div className="text-green-100/80 mb-6">
-              <strong className="block mb-1 font-bold text-yellow-200">การดูแลรักษา:</strong>
+              <strong className="block mb-1 font-bold text-yellow-200">การดูแลรักษา :</strong>
               <ul className="list-disc list-inside space-y-1">
                 {result.DeficiencySolutions?.map((item, index) => (
                   <li key={index}>{item.solution_text}</li>

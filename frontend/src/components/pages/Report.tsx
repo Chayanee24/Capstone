@@ -111,33 +111,33 @@ export default function Report() {
     return Object.entries(countByDisease).map(([name, value]) => ({ name, value }));
   }, [filteredReports]);
 
-const topProvinces: TopProvince[] = useMemo(() => {
-  const provinceCount: Record<string, Record<string, number>> = {};
+  const topProvinces: TopProvince[] = useMemo(() => {
+    const provinceCount: Record<string, Record<string, number>> = {};
 
-  filteredReports.forEach((r) => {
-    if (!provinceCount[r.province]) provinceCount[r.province] = {};
-    provinceCount[r.province][r.disease_name] =
-      (provinceCount[r.province][r.disease_name] || 0) + 1; // ✅ นับครั้งละ 1
-  });
+    filteredReports.forEach((r) => {
+      if (!provinceCount[r.province]) provinceCount[r.province] = {};
+      provinceCount[r.province][r.disease_name] =
+        (provinceCount[r.province][r.disease_name] || 0) + 1; // ✅ นับครั้งละ 1
+    });
 
-  const provinceArray: TopProvince[] = Object.entries(provinceCount).map(
-    ([province, diseases]) => {
-      // หาโรคที่พบบ่อยที่สุดของจังหวัดนั้น
-      const [topDisease, topCount] = Object.entries(diseases).reduce(
-        (prev, curr) => (curr[1] > prev[1] ? curr : prev),
-        ["", 0]
-      );
+    const provinceArray: TopProvince[] = Object.entries(provinceCount).map(
+      ([province, diseases]) => {
+        // หาโรคที่พบบ่อยที่สุดของจังหวัดนั้น
+        const [topDisease, topCount] = Object.entries(diseases).reduce(
+          (prev, curr) => (curr[1] > prev[1] ? curr : prev),
+          ["", 0]
+        );
 
-      return {
-        province,
-        disease_name: topDisease,
-        total_cases: topCount, // จำนวนครั้งจริงของโรคนั้น
-      };
-    }
-  );
+        return {
+          province,
+          disease_name: topDisease,
+          total_cases: topCount, // จำนวนครั้งจริงของโรคนั้น
+        };
+      }
+    );
 
-  return provinceArray.sort((a, b) => b.total_cases - a.total_cases).slice(0, 5);
-}, [filteredReports]);
+    return provinceArray.sort((a, b) => b.total_cases - a.total_cases).slice(0, 5);
+  }, [filteredReports]);
 
 
   if (loading)
@@ -152,9 +152,9 @@ const topProvinces: TopProvince[] = useMemo(() => {
         สถิติโรคข้าว 📊
       </h1>
 
-      <div className="relative w-full flex justify-center md:justify-start items-center gap-4">
+      <div className="relative w-full flex justify-center items-center gap-4">
         <select
-          className="bg-zinc-800 border border-yellow-200 text-yellow-100 rounded-lg px-4 py-2 w-56"
+          className="bg-zinc-800 border border-yellow-200 text-yellow-100 rounded-lg px-4 py-2 w-56 text-center"
           value={filterType}
           onChange={(e) => {
             setFilterType(e.target.value as "region" | "province");
@@ -166,7 +166,7 @@ const topProvinces: TopProvince[] = useMemo(() => {
         </select>
 
         <select
-          className="bg-zinc-800 border border-yellow-200 text-yellow-100 rounded-lg px-4 py-2 w-56"
+          className="bg-zinc-800 border border-yellow-200 text-yellow-100 rounded-lg px-4 py-2 w-56 text-center"
           value={selectedValue}
           onChange={(e) => setSelectedValue(e.target.value)}
         >
@@ -175,6 +175,7 @@ const topProvinces: TopProvince[] = useMemo(() => {
           ))}
         </select>
       </div>
+
 
       {/* Dashboard + Pie Chart */}
       <div className="w-full grid grid-cols-1 md:grid-cols-6 gap-6">
@@ -186,7 +187,7 @@ const topProvinces: TopProvince[] = useMemo(() => {
               className="bg-zinc-800 p-4 rounded-xl shadow-lg border border-green-600 flex flex-col items-center"
             >
               <h3 className="text-yellow-400 font-bold text-center">{p.province}</h3>
-              <p className="text-green-300 mt-1 text-center">โรคพบบ่อย: {p.disease_name}</p>
+              <p className="text-green-300 mt-1 text-center">โรคพบบ่อย : {p.disease_name}</p>
               <p className="text-white mt-2 text-lg font-semibold">{p.total_cases} ครั้ง</p>
             </div>
           ))}
