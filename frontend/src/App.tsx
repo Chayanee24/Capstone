@@ -44,7 +44,6 @@ export default function App() {
 
   return (
     <div className="w-full h-full bg-zinc-900 font-nunito relative">
-      {/* Back button สำหรับ info pages */}
       {showBackButton && (
         <button
           onClick={() => navigate(-1)}
